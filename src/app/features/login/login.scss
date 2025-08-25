@@ -1,0 +1,10 @@
+.login-container {
+  position: absolute;
+  top: 5%;
+  left: calc(50% - 300px/2);
+  width: 300px;
+  form {
+    display: flex;
+    flex-direction: column;
+  }
+}

@@ -37,27 +37,3 @@ body {
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-footer {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  background-color: var(--mat-sys-primary);
-  color: var(--mat-sys-on-primary);
-  text-align: center;
-  line-height: 1.5rem;
-  padding: 10px;
-
-  span {
-    display: block;
-  }
-}
-
-.login-container {
-  width: 300px;
-  margin: 100px auto;
-  form {
-    display: flex;
-    flex-direction: column;
-  }
-}
