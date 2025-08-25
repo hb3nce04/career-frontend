@@ -1,0 +1,28 @@
+<div class="login-container">
+  <h3>Kérlek jelentkezz be,</h3>
+  <form [formGroup]="loginForm">
+    <mat-form-field>
+      <mat-label>OM azonosító</mat-label>
+      <input matInput type="text" formControlName="identificationNumber" autofocus>
+      @if (this.loginForm.get('identificationNumber')?.errors && loginForm.get('identificationNumber')?.dirty) {
+        @if (this.loginForm.get('identificationNumber')?.errors?.['required']) {
+          <mat-error>Az OM azonosító megadása <strong>kötelező</strong></mat-error>
+        }
+      }
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>Jelszó</mat-label>
+      <input matInput type="password" formControlName="password">
+      @if (this.loginForm.get('password')?.errors && loginForm.get('password')?.dirty) {
+        @if (this.loginForm.get('password')?.errors?.['required']) {
+          <mat-error>A jelszó megadása <strong>kötelező</strong></mat-error>
+        }
+      }
+    </mat-form-field>
+
+    <button matButton="filled" (click)="handleLogin()">Bejelentkezés</button>
+  </form>
+
+</div>
+<app-footer/>
