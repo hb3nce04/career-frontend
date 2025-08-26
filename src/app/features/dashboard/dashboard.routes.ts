@@ -5,10 +5,11 @@ import {Contact} from './contact/contact';
 import {Home} from './home/home';
 import {AdminGuard} from '../../core/guards/admin.guard';
 import {Students} from './students/students';
+import {ClassGuard} from '../../core/guards/class.guard';
 
 export default [
   {path: '', component: Home},
-  {path: 'students', component: Students},
+  {path: 'students', component: Students, canActivate: [ClassGuard]},
   {path: 'selector', component: Selector},
   {path: 'profile', component: Profile},
   {path: 'contact', component: Contact},

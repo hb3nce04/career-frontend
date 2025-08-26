@@ -4,7 +4,6 @@ import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/
 import {MatButton} from '@angular/material/button';
 import {AuthService} from '../../../core/services/auth.service';
 import {LoadingService} from '../../../core/services/loading.service';
-import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +18,6 @@ import {AsyncPipe} from '@angular/common';
     MatLabel,
     MatError,
     MatButton,
-    AsyncPipe
   ]
 })
 export class Login {

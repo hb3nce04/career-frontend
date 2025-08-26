@@ -25,7 +25,7 @@
       }
     </mat-form-field>
 
-    <button matButton="filled" (click)="handleLogin()" [disabled]="this.loadingService.loading$ | async">Bejelentkezés</button>
+    <button matButton="filled" (click)="handleLogin()" [disabled]="this.loadingService.loadingSubject.value">Bejelentkezés</button>
   </form>
 
 </div>

@@ -12,7 +12,7 @@ import {
   MatTable
 } from '@angular/material/table';
 import {environment} from '../../../../../environments/environment';
-import {IUser} from '../../../../core/models/user.model';
+import {IUser} from '../../../../shared/models/user.model';
 import {UserService} from './user.service';
 import {MatPaginator} from '@angular/material/paginator';
 

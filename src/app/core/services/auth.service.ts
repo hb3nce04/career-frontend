@@ -4,7 +4,7 @@ import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
-import {IUser} from '../models/user.model';
+import {IUser} from '../../shared/models/user.model';
 
 interface LoginResponse {
   message: string;
@@ -19,7 +19,6 @@ export class AuthService {
   private apiUrl: string = environment.apiUrl + "/auth";
 
   private userSubject = new BehaviorSubject<IUser | null>(null);
-  user$ = this.userSubject.asObservable();
 
   login(id: string | null | undefined, password: string | null | undefined) {
     this.http.post<LoginResponse>(this.apiUrl + "/login", {id, password}, {withCredentials: true}).subscribe({
@@ -30,7 +29,7 @@ export class AuthService {
       },
       error: response => {
         const error = response.error;
-        this.notificationService.open(error)
+        this.notificationService.open(error.message ?? 'Ismeretlen hiba történt!')
       }
     })
   }

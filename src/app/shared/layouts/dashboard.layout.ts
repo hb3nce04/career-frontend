@@ -3,7 +3,6 @@ import {RouterOutlet} from '@angular/router';
 import {Navbar} from '../components/navbar/navbar';
 import {Footer} from '../components/footer/footer';
 import {MatProgressBar} from '@angular/material/progress-bar';
-import {AsyncPipe} from '@angular/common';
 import {LoadingService} from '../../core/services/loading.service';
 
 @Component({
@@ -13,14 +12,20 @@ import {LoadingService} from '../../core/services/loading.service';
     Navbar,
     Footer,
     MatProgressBar,
-    AsyncPipe
   ],
+  styles: `
+    .page-content {
+      padding: 20px 50px;
+    }
+  `,
   template: `
     <app-navbar/>
-    @if (this.loadingService.loading$ | async) {
+    @if (this.loadingService.loadingSubject.value) {
       <mat-progress-bar mode="indeterminate"></mat-progress-bar>
     }
-    <router-outlet></router-outlet>
+    <div class="page-content">
+      <router-outlet></router-outlet>
+    </div>
     <app-footer/>`
 })
 export class DashboardLayout {

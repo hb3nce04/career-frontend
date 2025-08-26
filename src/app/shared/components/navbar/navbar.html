@@ -12,16 +12,17 @@
     OM azonosítód: {{ this.authService.getId() }} ({{ this.authService.getIsAdmin() ? "Admin" : "Felhasználó" }})
   </span>
   <button mat-icon-button (click)="this.themeService.toggleDarkMode()">
-    <mat-icon>{{ (this.themeService.darkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
+    <mat-icon>{{ this.themeService.darkModeSubject.value ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
   <button mat-icon-button [matMenuTriggerFor]="userMenu">
     <img class="avatar" src="/assets/avatar.jpg"/>
   </button>
   <mat-menu #userMenu="matMenu">
-    @for (button of dropdownButtons; track $index) {
-      <button mat-button (click)="handleDropdown(button)">
-        {{ button }}
-      </button>
-    }
+    <button mat-menu-item routerLink="/dashboard/profile">
+      Profil
+    </button>
+    <button mat-menu-item  (click)="this.authService.logout()">
+      Kijelentkezés
+    </button>
   </mat-menu>
 </mat-toolbar>

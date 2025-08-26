@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
+import {environment} from '../../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {IStudent} from './student.model';
+import {IStudent} from '../../../../shared/models/student.model';
 
 @Injectable({providedIn: 'root'})
 export class StudentService {

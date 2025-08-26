@@ -6,13 +6,12 @@ import {StorageService} from './storage.service';
   providedIn: 'root'
 })
 export class ThemeService {
-  private darkModeSubject = new BehaviorSubject<boolean>(false);
-  darkMode$ = this.darkModeSubject.asObservable();
+  darkModeSubject = new BehaviorSubject<boolean>(false);
   private storageService: StorageService = inject(StorageService);
 
   onInit() {
     this.loadFromStorage();
-    this.darkMode$.subscribe(isDark => {
+    this.darkModeSubject.subscribe(isDark => {
       this.storageService.setItem<boolean>('dark', isDark);
     });
   }

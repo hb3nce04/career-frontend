@@ -1,1 +1,17 @@
-selector works
+<h1>Válasszon osztályt!</h1>
+<div class="selector-container">
+  <button matButton>Osztály hozzáadása</button>
+  @for (schoolClass of classes; track schoolClass.id) {
+    <mat-card appearance="outlined">
+      <mat-card-content>
+        <h2>Osztály: {{ schoolClass.name }}</h2>
+        <h2>Végzési év: {{ schoolClass.finishing_year }}</h2>
+        <span>{{ schoolClass.School?.name }}</span>
+      </mat-card-content>
+      <mat-card-actions>
+        <button matButton (click)="this.classService.select(schoolClass)">Kiválasztás</button>
+        <button matButton>Törlés</button>
+      </mat-card-actions>
+    </mat-card>
+  }
+</div>
