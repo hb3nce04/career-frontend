@@ -1,7 +1,7 @@
 import {Component, inject, OnInit, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {ThemeService} from './core/services/theme.service';
-import {ClassService} from './core/services/class.service';
+import {ClassSelectorService} from './core/services/class-selector.service';
 
 @Component({
   selector: 'app-root',
@@ -12,11 +12,11 @@ import {ClassService} from './core/services/class.service';
 export class App implements OnInit{
   protected readonly title = signal('career-frontend');
   private themeService: ThemeService = inject(ThemeService);
-  private classService: ClassService = inject(ClassService);
+  private classSelectorService: ClassSelectorService = inject(ClassSelectorService);
 
   // TODO: remove this
   ngOnInit(): void {
     this.themeService.onInit()
-    this.classService.onInit();
+    this.classSelectorService.onInit();
   }
 }

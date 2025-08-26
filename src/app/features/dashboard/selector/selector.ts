@@ -1,9 +1,11 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ClassService} from '../../../core/services/class.service';
+import {ClassService} from './class.service';
 import {MatCard, MatCardActions, MatCardContent} from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
 import {IClass} from '../../../shared/models/class.model';
+import {ClassSelectorService} from '../../../core/services/class-selector.service';
 
+// Kiválasztott osztály jelölése valahogy és felbontani ClassSelectorService-re
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.html',
@@ -17,6 +19,7 @@ import {IClass} from '../../../shared/models/class.model';
 })
 export class Selector implements OnInit{
   protected classService = inject(ClassService);
+  protected classSelectorService = inject(ClassSelectorService);
 
   classes: IClass[] = [];
 

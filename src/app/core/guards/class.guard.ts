@@ -1,15 +1,15 @@
 import {inject, Injectable} from '@angular/core';
 import {CanActivate, Router} from '@angular/router';
-import {ClassService} from '../services/class.service';
 import {of} from 'rxjs';
+import {ClassSelectorService} from '../services/class-selector.service';
 
 @Injectable({providedIn: 'root'})
 export class ClassGuard implements CanActivate {
-  protected classService = inject(ClassService);
+  protected classSelectorService: ClassSelectorService = inject(ClassSelectorService);
   protected router: Router = inject(Router);
 
   canActivate() {
-    const selectedClass = this.classService.selectedClassSubject.value;
+    const selectedClass = this.classSelectorService.selectedClassSubject.value;
     if (selectedClass === null) {
       this.router.navigate(['/dashboard/selector']);
     }

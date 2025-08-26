@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {ClassService} from '../../../core/services/class.service';
+import {ClassSelectorService} from '../../../core/services/class-selector.service';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +7,5 @@ import {ClassService} from '../../../core/services/class.service';
   imports: []
 })
 export class Home {
-  protected classService: ClassService = inject(ClassService);
+  protected classSelectorService: ClassSelectorService = inject(ClassSelectorService);
 }
