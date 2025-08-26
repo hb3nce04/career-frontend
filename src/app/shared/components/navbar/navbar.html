@@ -6,8 +6,8 @@
     </button>
   }
   <span class="spacer"></span>
-  <button mat-icon-button (click)="toggleDarkMode()">
-    <mat-icon>{{ darkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  <button mat-icon-button (click)="this.themeService.toggleDarkMode()">
+    <mat-icon>{{ (this.themeService.darkMode$ | async) ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
   <button mat-icon-button [matMenuTriggerFor]="userMenu">
     <img class="avatar" src="/assets/avatar.jpg" />

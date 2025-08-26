@@ -3,10 +3,11 @@ import {MatToolbar} from '@angular/material/toolbar';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuTrigger} from '@angular/material/menu';
-import {Router, RouterLink} from '@angular/router';
-import {StorageService} from '../../../core/services/storage.service';
+import {RouterLink} from '@angular/router';
 import {AuthService} from '../../../core/services/auth.service';
 import {NAV_LINKS} from '../../../core/constants/nav-link.constant';
+import {ThemeService} from '../../../core/services/theme.service';
+import {AsyncPipe} from '@angular/common';
 
 export interface NavLink {
   label: string;
@@ -25,36 +26,15 @@ export interface NavLink {
     MatIconButton,
     MatMenu,
     MatMenuTrigger,
-    RouterLink
+    RouterLink,
+    AsyncPipe
   ]
 })
 export class Navbar {
-  dropdownButtons = ['Kijelentkezés'];
-
-  darkMode = false;
-
-  private router: Router = inject(Router);
-  private storageService: StorageService = inject(StorageService);
   private authService: AuthService = inject(AuthService);
+  protected themeService: ThemeService = inject(ThemeService);
 
-  toggleDarkMode() {
-    this.darkMode = !this.darkMode;
-    this.storageService.setItem('mode', this.darkMode ? 'dark' : 'light');
-  }
-
-  handleNavigation(page: string) {
-    switch (page) {
-      case 'Profil':
-        this.router.navigate(['/profile']);
-        break;
-      case 'Főoldal':
-        this.router.navigate(['/admin']);
-        break;
-      case 'Osztály kiválasztása':
-        this.router.navigate(['/class-selector']);
-        break;
-    }
-  }
+  dropdownButtons = ['Kijelentkezés'];
 
   handleDropdown(setting: string) {
     if (setting === 'Kijelentkezés') {
