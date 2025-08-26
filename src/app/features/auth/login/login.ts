@@ -2,8 +2,9 @@ import {Component, inject} from '@angular/core';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {Footer} from '../../../shared/components/footer/footer';
 import {AuthService} from '../../../core/services/auth.service';
+import {LoadingService} from '../../../core/services/loading.service';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -18,11 +19,12 @@ import {AuthService} from '../../../core/services/auth.service';
     MatLabel,
     MatError,
     MatButton,
-    Footer
+    AsyncPipe
   ]
 })
 export class Login {
   private authService: AuthService = inject(AuthService);
+  protected loadingService: LoadingService = inject(LoadingService);
 
   loginForm = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),

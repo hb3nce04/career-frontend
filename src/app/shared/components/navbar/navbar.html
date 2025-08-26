@@ -1,0 +1,22 @@
+<mat-toolbar color="primary">
+  <span class="app-title">Pályakövetés</span>
+  @for (link of NAV_LINKS; track $index) {
+    <button mat-button [routerLink]="link.path">
+      {{ link.label }}
+    </button>
+  }
+  <span class="spacer"></span>
+  <button mat-icon-button (click)="toggleDarkMode()">
+    <mat-icon>{{ darkMode ? 'dark_mode' : 'light_mode' }}</mat-icon>
+  </button>
+  <button mat-icon-button [matMenuTriggerFor]="userMenu">
+    <img class="avatar" src="/assets/avatar.jpg" />
+  </button>
+  <mat-menu #userMenu="matMenu">
+    @for (button of dropdownButtons; track $index) {
+      <button mat-button (click)="handleDropdown(button)">
+        {{ button }}
+      </button>
+    }
+  </mat-menu>
+</mat-toolbar>
