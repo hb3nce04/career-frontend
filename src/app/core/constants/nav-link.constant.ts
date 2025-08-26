@@ -3,6 +3,7 @@ import {NavLink} from '../../shared/components/navbar/navbar';
 // TODO: kódismétlés refactor
 export const NAV_LINKS: NavLink[] = [
   {label: 'Főoldal', path: '/dashboard'},
+  {label: 'Tanulók kezelése', path: '/dashboard/students'},
   {label: 'Osztály kiválasztása', path: '/dashboard/selector'},
   {label: 'Profil', path: '/dashboard/profile'},
   {label: 'Kapcsolat', path: '/dashboard/contact'},

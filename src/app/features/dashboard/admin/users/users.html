@@ -1,1 +1,19 @@
-Users page
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="data" class="mat-elevation-z8">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> OM azonosító</th>
+      <td mat-cell *matCellDef="let user"> {{ user.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="isAdmin">
+      <th mat-header-cell *matHeaderCellDef> Jogosultság</th>
+      <td mat-cell *matCellDef="let user"> {{ user.is_admin ? 'Admin' : 'Felhasználó' }}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]"
+                 showFirstLastButtons>
+  </mat-paginator>
+</div>

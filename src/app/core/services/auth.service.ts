@@ -4,15 +4,11 @@ import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
+import {IUser} from '../models/user.model';
 
 interface LoginResponse {
   message: string;
   user: IUser;
-}
-
-interface IUser {
-  id: string;
-  isAdmin: boolean;
 }
 
 @Injectable({providedIn: 'root'})
