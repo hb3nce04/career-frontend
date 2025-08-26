@@ -1,9 +1,11 @@
-<mat-toolbar color="primary">
-  <span class="app-title">Pályakövetés</span>
+<mat-toolbar>
+  <span class="app-title" routerLink="/">Pályakövetés</span>
   @for (link of NAV_LINKS; track $index) {
-    <button mat-button [routerLink]="link.path">
-      {{ link.label }}
-    </button>
+    @if (!link.isProtected || (link.isProtected && this.authService.getIsAdmin())) {
+      <button mat-button [routerLink]="link.path">
+        {{ link.label }}
+      </button>
+    }
   }
   <span class="spacer"></span>
   <button mat-icon-button (click)="this.themeService.toggleDarkMode()">

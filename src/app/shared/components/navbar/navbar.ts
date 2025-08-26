@@ -12,7 +12,7 @@ import {AsyncPipe} from '@angular/common';
 export interface NavLink {
   label: string;
   path: string;
-  isAdmin?: boolean;
+  isProtected?: boolean;
 }
 
 @Component({
@@ -31,7 +31,7 @@ export interface NavLink {
   ]
 })
 export class Navbar {
-  private authService: AuthService = inject(AuthService);
+  protected authService: AuthService = inject(AuthService);
   protected themeService: ThemeService = inject(ThemeService);
 
   dropdownButtons = ['Kijelentkezés'];

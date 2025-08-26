@@ -1,16 +1,16 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
 
 interface LoginResponse {
   message: string;
-  user: ProfileResponse;
+  user: IUser;
 }
 
-interface ProfileResponse {
+interface IUser {
   id: string;
   isAdmin: boolean;
 }
@@ -22,15 +22,19 @@ export class AuthService {
   private router: Router = inject(Router);
   private apiUrl: string = environment.apiUrl + "/auth";
 
+  private userSubject = new BehaviorSubject<IUser | null>(null);
+  user$ = this.userSubject.asObservable();
+
   login(id: string | null | undefined, password: string | null | undefined) {
     this.http.post<LoginResponse>(this.apiUrl + "/login", {id, password}, {withCredentials: true}).subscribe({
       next: response => {
+        this.userSubject.next(response.user);
         this.notificationService.open(response.message)
         this.router.navigate(['/dashboard/selector']);
       },
       error: response => {
         const error = response.error;
-        this.notificationService.open(error.messag)
+        this.notificationService.open(error)
       }
     })
   }
@@ -48,7 +52,17 @@ export class AuthService {
     })
   }
 
-  getProfile(): Observable<ProfileResponse> {
-    return this.http.get<ProfileResponse>(this.apiUrl + "/profile", {withCredentials: true});
+  getProfile(): Observable<IUser> {
+    return this.http.get<IUser>(this.apiUrl + '/profile', { withCredentials: true }).pipe(
+      tap(user => this.userSubject.next(user)),
+    );
+  }
+
+  getId(): string | undefined {
+    return this.userSubject.value?.id;
+  }
+
+  getIsAdmin(): boolean {
+    return !!this.userSubject.value?.isAdmin;
   }
 }
