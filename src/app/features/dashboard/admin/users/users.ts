@@ -11,10 +11,9 @@ import {
   MatRowDef,
   MatTable
 } from '@angular/material/table';
-import {environment} from '../../../../../environments/environment';
-import {IUser} from '../../../../shared/models/user.model';
-import {UserService} from './user.service';
+import {UserService} from '../../../../core/services/user.service';
 import {MatPaginator} from '@angular/material/paginator';
+import {UserDto} from '../../../../shared/dtos/user.dto.ts';
 
 @Component({
   selector: 'app-users',
@@ -36,7 +35,7 @@ import {MatPaginator} from '@angular/material/paginator';
 export class Users implements OnInit{
   private userService = inject(UserService);
 
-  data: IUser[] = [];
+  data: UserDto[] = [];
   columns: string[] = ['id', 'isAdmin'];
 
   ngOnInit(): void {

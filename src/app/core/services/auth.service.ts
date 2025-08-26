@@ -4,11 +4,11 @@ import {environment} from '../../../environments/environment';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {Router} from '@angular/router';
 import {NotificationService} from './notification.service';
-import {IUser} from '../../shared/models/user.model';
+import {UserDto} from '../../shared/dtos/user.dto.ts';
+import {BaseResponseDto} from '../dto/base-response.dto';
 
-interface LoginResponse {
-  message: string;
-  user: IUser;
+interface LoginResponse extends BaseResponseDto{
+  user: UserDto;
 }
 
 @Injectable({providedIn: 'root'})
@@ -18,7 +18,7 @@ export class AuthService {
   private router: Router = inject(Router);
   private apiUrl: string = environment.apiUrl + "/auth";
 
-  private userSubject = new BehaviorSubject<IUser | null>(null);
+  private userSubject = new BehaviorSubject<UserDto | null>(null);
 
   login(id: string | null | undefined, password: string | null | undefined) {
     this.http.post<LoginResponse>(this.apiUrl + "/login", {id, password}, {withCredentials: true}).subscribe({
@@ -47,8 +47,8 @@ export class AuthService {
     })
   }
 
-  getProfile(): Observable<IUser> {
-    return this.http.get<IUser>(this.apiUrl + '/profile', { withCredentials: true }).pipe(
+  getProfile(): Observable<UserDto> {
+    return this.http.get<UserDto>(this.apiUrl + '/profile', { withCredentials: true }).pipe(
       tap(user => this.userSubject.next(user)),
     );
   }
@@ -59,5 +59,9 @@ export class AuthService {
 
   getIsAdmin(): boolean {
     return !!this.userSubject.value?.isAdmin;
+  }
+
+  getRole(): string {
+    return this.getIsAdmin() ? "Admin" : "Felhasználó";
   }
 }

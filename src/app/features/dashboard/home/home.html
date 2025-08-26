@@ -1,7 +1,16 @@
-@if (this.classSelectorService.selectedClassSubject.value !== null) {
-  <p>
-    A kiválasztott osztály adatai: {{ this.classSelectorService.selectedClassSubject.value }}
-  </p>
+@if (this.selectedClass !== null) {
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Választott osztály</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <div>Azonosító: <span>{{ this.selectedClass.id }}</span></div>
+      <div>Név: <span>{{ this.selectedClass.name }}</span></div>
+      <div>Befejezés éve: <span>{{ this.selectedClass.finishing_year }}</span></div>
+      <div>Iskola: <span>{{ this.selectedClass.School?.name }}</span></div>
+    </mat-card-content>
+  </mat-card>
 } @else {
-  <span>Nincs kiválasztva osztály a lekérdezésekhez.</span>
+  <h1>Válassz ki egy osztályt a folytatáshoz!</h1>
+  <button matButton="tonal" routerLink="/dashboard/selector">Kiválasztom</button>
 }

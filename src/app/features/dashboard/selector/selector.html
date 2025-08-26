@@ -1,14 +1,17 @@
-<h1>Válasszon osztályt!</h1>
+<h1>Osztály választása</h1>
 <div class="selector-container">
   <div class="new-card">
     <button matButton>Osztály hozzáadása</button>
   </div>
   @for (schoolClass of classes; track schoolClass.id) {
-    <mat-card appearance="outlined" [class]="this.classSelectorService.selectedClassSubject.value?.id === schoolClass.id ? 'selected' : ''">
+    <mat-card appearance="outlined"
+              [class]="this.classSelectorService.selectedClassSubject.value?.id === schoolClass.id ? 'selected' : ''">
+      <mat-card-header>
+        <mat-card-title>Osztály: {{ schoolClass.name }}</mat-card-title>
+        <mat-card-subtitle>Végzés éve: {{ schoolClass.finishing_year }}</mat-card-subtitle>
+      </mat-card-header>
       <mat-card-content>
-        <h2>Osztály: {{ schoolClass.name }}</h2>
-        <h2>Végzési év: {{ schoolClass.finishing_year }}</h2>
-        <span>{{ schoolClass.School?.name }}</span>
+        {{ schoolClass.School?.name }}
       </mat-card-content>
       <mat-card-actions>
         <button matButton (click)="this.classSelectorService.select(schoolClass)">Kiválasztás</button>

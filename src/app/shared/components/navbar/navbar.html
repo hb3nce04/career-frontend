@@ -9,7 +9,7 @@
   }
   <span class="spacer"></span>
   <span class="user-details">
-    OM azonosítód: {{ this.authService.getId() }} ({{ this.authService.getIsAdmin() ? "Admin" : "Felhasználó" }})
+    OM azonosítód: {{ this.authService.getId() }} ({{ this.authService.getRole() }})
   </span>
   <button mat-icon-button (click)="this.themeService.toggleDarkMode()">
     <mat-icon>{{ this.themeService.darkModeSubject.value ? 'light_mode' : 'dark_mode' }}</mat-icon>

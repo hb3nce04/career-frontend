@@ -2,14 +2,14 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../../environments/environment';
 import {Observable} from 'rxjs';
-import {IStudent} from '../../../../shared/models/student.model';
+import {StudentDto} from '../../../../shared/dtos/student.dto';
 
 @Injectable({providedIn: 'root'})
 export class StudentService {
   private httpClient: HttpClient = inject(HttpClient);
   private apiUrl: string = environment.apiUrl + "/students";
 
-  getAll(): Observable<IStudent[]> {
-    return this.httpClient.get<IStudent[]>(this.apiUrl, {withCredentials: true});
+  getAll(): Observable<StudentDto[]> {
+    return this.httpClient.get<StudentDto[]>(this.apiUrl, {withCredentials: true});
   }
 }
