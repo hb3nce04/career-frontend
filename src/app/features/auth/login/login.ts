@@ -2,8 +2,8 @@ import {Component, inject} from '@angular/core';
 import {MatError, MatFormField, MatInput, MatLabel} from '@angular/material/input';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {Footer} from '../../shared/components/footer/footer';
-import {AuthService} from '../../core/services/auth.service';
+import {Footer} from '../../../shared/components/footer/footer';
+import {AuthService} from '../../../core/services/auth.service';
 
 @Component({
   selector: 'app-login',
