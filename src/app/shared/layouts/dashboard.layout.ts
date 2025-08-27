@@ -21,7 +21,7 @@ import {LoadingService} from '../../core/services/loading.service';
   template: `
     <app-navbar/>
     @if (this.loadingService.loadingSubject.value) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate" style="position: fixed"></mat-progress-bar>
     }
     <div class="page-content">
       <router-outlet></router-outlet>

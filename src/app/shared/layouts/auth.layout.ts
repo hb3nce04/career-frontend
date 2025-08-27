@@ -13,7 +13,7 @@ import {LoadingService} from '../../core/services/loading.service';
   ],
   template: `
     @if (this.loadingService.loadingSubject.value) {
-      <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate" style="position: fixed"></mat-progress-bar>
     }
     <router-outlet></router-outlet>
     <app-footer/>`
