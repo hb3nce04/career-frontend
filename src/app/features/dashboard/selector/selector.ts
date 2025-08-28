@@ -16,9 +16,9 @@ import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
 import {CreateClassDialog} from './create/create';
 import {MatDialog} from '@angular/material/dialog';
+import {DeleteClassDialog} from './delete/delete';
 
-// TODO: class delete confirmation dialog
-// TODO: létrehozásnál nem frissül a lista
+// TODO: létrehozás / törlésnél nem frissül a lista
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.html',
@@ -73,10 +73,18 @@ export class Selector implements OnInit {
     )
   }
 
-  handleClassCreation() {
+  handleClassCreate() {
     this.dialog.open(CreateClassDialog, {
       data: {
         class: this.newClass()
+      }
+    })
+  }
+
+  handleClassDelete(schoolClass: ClassDto) {
+    this.dialog.open(DeleteClassDialog, {
+      data: {
+        class: schoolClass
       }
     })
   }

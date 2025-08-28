@@ -1,7 +1,7 @@
 <h1>Osztály választása</h1>
 <div class="selector-container">
   <div class="new-card">
-    <button matButton (click)="handleClassCreation()">Osztály hozzáadása</button>
+    <button matButton (click)="handleClassCreate()">Osztály hozzáadása</button>
   </div>
   @for (schoolClass of classes; track schoolClass.id) {
     <mat-card appearance="outlined"
@@ -18,7 +18,7 @@
           <button matButton (click)="this.handleClassUnselection()">Kiválasztás törlése</button>
         } @else {
           <button matButton (click)="this.handleClassSelection(schoolClass)">Kiválasztás</button>
-          <button matButton>Törlés</button>
+          <button matButton (click)="this.handleClassDelete(schoolClass)">Törlés</button>
         }
       </mat-card-actions>
     </mat-card>

@@ -21,4 +21,8 @@ export class ClassService {
       schoolId: schoolId,
     }, {withCredentials: true});
   }
+
+  delete(id: number): Observable<BaseResponseDto> {
+    return this.httpClient.delete<BaseResponseDto>(this.apiUrl + "/" + id, {withCredentials: true});
+  }
 }
