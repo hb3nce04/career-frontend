@@ -13,6 +13,7 @@ import {
 import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../core/services/notification.service';
 import {Router} from '@angular/router';
+import {AsyncPipe} from '@angular/common';
 
 @Component({
   selector: 'app-selector',
@@ -25,7 +26,8 @@ import {Router} from '@angular/router';
     MatCardContent,
     MatCardActions,
     MatCardHeader,
-    MatButton
+    MatButton,
+    AsyncPipe
   ]
 })
 export class Selector implements OnInit {
@@ -47,6 +49,15 @@ export class Selector implements OnInit {
         next: () => {
           this.notificationService.open("Az osztály sikeresen kiválasztásra került!")
           this.router.navigate(['/dashboard/students']);
+        }
+      }
+    )
+  }
+
+  handleClassUnselection() {
+    this.classSelectorService.unselect().subscribe({
+        next: () => {
+          this.notificationService.open("Az osztály kiválasztása sikeresen törlésre került!")
         }
       }
     )

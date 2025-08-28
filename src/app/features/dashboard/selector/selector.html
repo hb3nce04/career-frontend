@@ -5,7 +5,7 @@
   </div>
   @for (schoolClass of classes; track schoolClass.id) {
     <mat-card appearance="outlined"
-              [class]="this.classSelectorService.selectedClassSubject.value?.id === schoolClass.id ? 'selected' : ''">
+              [class]="(this.classSelectorService.selectedClass$ | async)?.id === schoolClass.id ? 'selected' : ''">
       <mat-card-header>
         <mat-card-title>Osztály: {{ schoolClass.name }}</mat-card-title>
         <mat-card-subtitle>Végzés éve: {{ schoolClass.finishing_year }}</mat-card-subtitle>
@@ -14,8 +14,12 @@
         {{ schoolClass.School?.name }}
       </mat-card-content>
       <mat-card-actions>
-        <button matButton (click)="this.handleClassSelection(schoolClass)">Kiválasztás</button>
-        <button matButton>Törlés</button>
+        @if ((this.classSelectorService.selectedClass$ | async)?.id === schoolClass.id) {
+          <button matButton (click)="this.handleClassUnselection()">Kiválasztás törlése</button>
+        } @else {
+          <button matButton (click)="this.handleClassSelection(schoolClass)">Kiválasztás</button>
+          <button matButton>Törlés</button>
+        }
       </mat-card-actions>
     </mat-card>
   }
