@@ -6,14 +6,14 @@ import {
   MatHeaderCell,
   MatHeaderCellDef,
   MatHeaderRow,
-  MatHeaderRowDef,
+  MatHeaderRowDef, MatNoDataRow,
   MatRow,
   MatRowDef,
   MatTable
 } from '@angular/material/table';
 import {UserService} from '../../../../core/services/user.service';
 import {MatPaginator} from '@angular/material/paginator';
-import {UserDto} from '../../../../shared/dtos/user.dto.ts';
+import {UserDto} from '../../../../shared/dtos/user.dto';
 
 @Component({
   selector: 'app-users',
@@ -29,7 +29,8 @@ import {UserDto} from '../../../../shared/dtos/user.dto.ts';
     MatRow,
     MatHeaderRowDef,
     MatRowDef,
-    MatPaginator
+    MatPaginator,
+    MatNoDataRow
   ]
 })
 export class Users implements OnInit{

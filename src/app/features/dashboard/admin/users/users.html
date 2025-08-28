@@ -1,3 +1,4 @@
+<h1>Felhasználók</h1>
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="data" class="mat-elevation-z8">
     <ng-container matColumnDef="id">
@@ -12,6 +13,11 @@
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="columns.length">
+        Nincs elérhető adat.
+      </td>
+    </tr>
   </table>
   <mat-paginator [pageSizeOptions]="[5, 10, 20]"
                  showFirstLastButtons>

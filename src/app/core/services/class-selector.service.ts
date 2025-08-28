@@ -10,7 +10,6 @@ export class ClassSelectorService {
   selectedClassSubject = new BehaviorSubject<ClassDto | null>(this.loadFromStorage());
   selectedClass$ = this.selectedClassSubject.asObservable();
 
-
   onInit() {
     this.selectedClassSubject.subscribe(selectedClass => {
       this.storageService.setItem<ClassDto | null>("selected", selectedClass)

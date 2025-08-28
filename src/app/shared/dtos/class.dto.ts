@@ -1,5 +1,5 @@
 import {SchoolDto} from './school.dto';
-import {UserDto} from './user.dto.ts';
+import {UserDto} from './user.dto';
 import {Students} from '../../features/dashboard/students/students';
 
 export interface ClassDto {

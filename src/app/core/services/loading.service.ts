@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
 
+// TODO: loginnál gombra spinner illetve töltésnél blur a képernyőre
 @Injectable({
   providedIn: 'root'
 })

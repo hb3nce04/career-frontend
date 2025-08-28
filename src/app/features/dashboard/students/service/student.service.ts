@@ -7,9 +7,9 @@ import {StudentDto} from '../../../../shared/dtos/student.dto';
 @Injectable({providedIn: 'root'})
 export class StudentService {
   private httpClient: HttpClient = inject(HttpClient);
-  private apiUrl: string = environment.apiUrl + "/students";
+  //private apiUrl: string = environment.apiUrl + "/students";
 
-  getAll(): Observable<StudentDto[]> {
-    return this.httpClient.get<StudentDto[]>(this.apiUrl, {withCredentials: true});
+  getAllByClassId(classId: number): Observable<StudentDto[]> {
+    return this.httpClient.get<StudentDto[]>(`${environment.apiUrl}/classes/${classId}/students`, {withCredentials: true});
   }
 }

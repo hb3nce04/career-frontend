@@ -1,7 +1,10 @@
-span {
-  color: var(--mat-sys-primary)
-}
-
-mat-card{
-  width: 500px;
+.cards {
+  display: flex;
+  gap: 1rem;
+  mat-card{
+    width: 500px;
+  }
+  span {
+    color: var(--mat-sys-primary)
+  }
 }

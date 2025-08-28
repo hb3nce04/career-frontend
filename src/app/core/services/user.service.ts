@@ -3,7 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {AuthService} from './auth.service';
-import {UserDto} from '../../shared/dtos/user.dto.ts';
+import {UserDto} from '../../shared/dtos/user.dto';
 import {BaseResponseDto} from '../dto/base-response.dto';
 
 @Injectable({providedIn: 'root'})

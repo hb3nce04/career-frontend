@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, computed, inject} from '@angular/core';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
 import {RouterLink} from '@angular/router';
 import {MatButton} from '@angular/material/button';
@@ -19,5 +19,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/mat
 })
 export class Home {
   protected classSelectorService: ClassSelectorService = inject(ClassSelectorService);
-  selectedClass = this.classSelectorService.selectedClassSubject.value
+  selectedClass = computed(() => this.classSelectorService.selectedClassSubject.value);
+
+  studentsInClass = 5;
 }
