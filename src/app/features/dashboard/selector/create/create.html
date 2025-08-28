@@ -1,0 +1,44 @@
+<h2 mat-dialog-title>Osztály létrehozása</h2>
+<mat-dialog-content>
+  <form [formGroup]="createForm">
+    <mat-form-field>
+      <mat-label>Osztály neve</mat-label>
+      <input matInput formControlName="name"/>
+      @if (this.createForm.get('name')?.errors && createForm.get('name')?.touched) {
+        @if (this.createForm.get('name')?.errors?.['required']) {
+          <mat-error>Az osztálynév megadása kötelező.</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Végzési év</mat-label>
+      <mat-select formControlName="finishingYear">
+        @for (year of finishingYears; track $index) {
+          <mat-option [value]="year">{{ year }}</mat-option>
+        }
+      </mat-select>
+      @if (this.createForm.get('finishingYear')?.errors && createForm.get('finishingYear')?.touched) {
+        @if (this.createForm.get('finishingYear')?.errors?.['required']) {
+          <mat-error>Az végzési év megadása kötelező.</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Iskola</mat-label>
+      <mat-select formControlName="schoolId">
+        @for (school of schools; track school.id) {
+          <mat-option [value]="school.id">{{ school.name }}</mat-option>
+        }
+      </mat-select>
+      @if (this.createForm.get('schoolId')?.errors && createForm.get('schoolId')?.touched) {
+        @if (this.createForm.get('schoolId')?.errors?.['required']) {
+          <mat-error>Az iskola megadása kötelező.</mat-error>
+        }
+      }
+    </mat-form-field>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
+  <button matButton (click)="handleSave()">Létrehozás</button>
+</mat-dialog-actions>

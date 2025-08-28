@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {ClassService} from './class.service';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
 import {ClassDto} from '../../../shared/dtos/class.dto';
@@ -14,7 +14,11 @@ import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../core/services/notification.service';
 import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
+import {CreateClassDialog} from './create/create';
+import {MatDialog} from '@angular/material/dialog';
 
+// TODO: class delete confirmation dialog
+// TODO: létrehozásnál nem frissül a lista
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.html',
@@ -35,6 +39,12 @@ export class Selector implements OnInit {
   protected classSelectorService = inject(ClassSelectorService);
   protected notificationService = inject(NotificationService);
   protected router = inject(Router);
+  protected dialog = inject(MatDialog);
+  protected newClass: WritableSignal<{
+    name: string;
+    finishingYear: number;
+    schoolId: number
+  } | null> = signal(null);
 
   classes: ClassDto[] = [];
 
@@ -61,5 +71,13 @@ export class Selector implements OnInit {
         }
       }
     )
+  }
+
+  handleClassCreation() {
+    this.dialog.open(CreateClassDialog, {
+      data: {
+        class: this.newClass()
+      }
+    })
   }
 }

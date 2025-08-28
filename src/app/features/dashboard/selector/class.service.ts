@@ -3,6 +3,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {ClassDto} from '../../../shared/dtos/class.dto';
+import {BaseResponseDto} from '../../../core/dto/base-response.dto';
 
 @Injectable({providedIn: 'root'})
 export class ClassService {
@@ -11,5 +12,13 @@ export class ClassService {
 
   getAll(): Observable<ClassDto[]> {
     return this.httpClient.get<ClassDto[]>(this.apiUrl, {withCredentials: true});
+  }
+
+  create(name: string, finishingYear: number, schoolId: number): Observable<BaseResponseDto> {
+    return this.httpClient.post<BaseResponseDto>(this.apiUrl, {
+      name: name,
+      finishingYear: finishingYear,
+      schoolId: schoolId,
+    }, {withCredentials: true});
   }
 }
