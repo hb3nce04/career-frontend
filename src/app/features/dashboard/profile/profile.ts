@@ -5,9 +5,9 @@ import {MatButton} from '@angular/material/button';
 import {MatError, MatFormField} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {LoadingService} from '../../../core/services/loading.service';
-import {passwordMatchValidator} from '../../../shared/validators/password-match.validator';
 import {UserService} from '../../../core/services/user.service';
 import {NotificationService} from '../../../core/services/notification.service';
+import {passwordMatchValidator, passwordNotMatchValidator} from '../../../shared/validators/password.validator';
 
 @Component({
   selector: 'app-profile',
@@ -31,10 +31,11 @@ export class Profile {
   profileForm = new FormGroup({
     oldPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
     newPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
-    newPasswordAgain: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$'), passwordMatchValidator]),
+    newPasswordAgain: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
+  }, {
+    validators: [passwordMatchValidator('newPassword', 'newPasswordAgain'), passwordNotMatchValidator('oldPassword', 'newPassword')]
   });
 
-  // TODO: fix validation
   handleUpdateProfile() {
     if (this.profileForm.valid) {
       const {oldPassword, newPassword} = this.profileForm.value;

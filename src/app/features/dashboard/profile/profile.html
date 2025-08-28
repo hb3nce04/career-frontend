@@ -20,8 +20,8 @@
         <mat-error>Régi jelszó megadása kötelező</mat-error>
       } @else if (this.profileForm.get('newPassword')?.errors?.['pattern']) {
         <mat-error>Hibás formátum</mat-error>
-      } @else if (this.profileForm.get('oldPassword')?.errors?.['differentFrom']) {
-        <mat-error>Nem egyezhet meg a régi jelszóval.</mat-error>
+      } @else if (this.profileForm.get('newPassword')?.errors?.['passwordMatch']) {
+        <mat-error>Az új jelszó nem egyezhet meg a régivel.</mat-error>
       }
     }
   </mat-form-field>
@@ -31,11 +31,13 @@
     @if (this.profileForm.get('newPasswordAgain')?.errors && profileForm.get('newPasswordAgain')?.touched) {
       @if (this.profileForm.get('newPasswordAgain')?.errors?.['required']) {
         <mat-error>Régi jelszó megadása kötelező</mat-error>
-      } @else if (this.profileForm.get('newPasswordAgain')?.errors?.['passwordMatchValidator']) {
+      } @else if (this.profileForm.get('newPasswordAgain')?.errors?.['passwordMismatch']) {
         <mat-error>A két jelszó nem egyezik.</mat-error>
       }
     }
   </mat-form-field>
 
-  <button matButton="filled" (click)="handleUpdateProfile()" [disabled]="this.loadingService.loadingSubject.value">Módosítások mentése</button>
+  <button matButton="filled" (click)="handleUpdateProfile()" [disabled]="this.loadingService.loadingSubject.value">
+    Módosítások mentése
+  </button>
 </form>
