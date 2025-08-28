@@ -68,7 +68,7 @@ export class CreateClassDialog implements OnInit{
      this.classService.create(name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
        next: result => {
          this.notificationService.open(result.message)
-         this.dialogRef.close();
+         this.dialogRef.close(true);
        },
        error: response => {
          const error = response.error;
@@ -79,6 +79,6 @@ export class CreateClassDialog implements OnInit{
   }
 
   handleClose() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

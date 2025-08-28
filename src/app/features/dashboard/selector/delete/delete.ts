@@ -27,20 +27,20 @@ export class DeleteClassDialog {
   protected classService = inject(ClassService);
   protected notificationService = inject(NotificationService);
 
-  handleClose() {
-    this.dialogRef.close();
-  }
-
   handleDelete() {
     this.classService.delete(this.data.class.id).subscribe({
       next: result => {
         this.notificationService.open(result.message)
-        this.dialogRef.close();
+        this.dialogRef.close(true);
       },
       error: response => {
         const error = response.error;
         this.notificationService.open(error.message ?? 'Hiba történt az osztály törlése során!')
       }}
     )
+  }
+
+  handleClose() {
+    this.dialogRef.close(false);
   }
 }

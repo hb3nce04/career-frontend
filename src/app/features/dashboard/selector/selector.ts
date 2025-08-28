@@ -18,7 +18,6 @@ import {CreateClassDialog} from './create/create';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteClassDialog} from './delete/delete';
 
-// TODO: létrehozás / törlésnél nem frissül a lista
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.html',
@@ -49,6 +48,10 @@ export class Selector implements OnInit {
   classes: ClassDto[] = [];
 
   ngOnInit(): void {
+    this.loadClasses();
+  }
+
+  loadClasses() {
     this.classService.getAll().subscribe(classes => {
       this.classes = classes;
     });
@@ -78,6 +81,10 @@ export class Selector implements OnInit {
       data: {
         class: this.newClass()
       }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.loadClasses();
+      }
     })
   }
 
@@ -85,6 +92,10 @@ export class Selector implements OnInit {
     this.dialog.open(DeleteClassDialog, {
       data: {
         class: schoolClass
+      }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.loadClasses();
       }
     })
   }
