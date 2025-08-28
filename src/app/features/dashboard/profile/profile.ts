@@ -43,8 +43,9 @@ export class Profile {
         next: result => {
           this.notificationService.open(result.message)
         },
-        error: err => {
-          this.notificationService.open("Hiba történt a jelszó módosítása során!")
+        error: response => {
+          const error = response.error;
+          this.notificationService.open(error.message ?? 'Hiba történt a jelszó frissítése során!')
         }}
       )
     }

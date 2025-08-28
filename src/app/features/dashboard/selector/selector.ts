@@ -11,8 +11,9 @@ import {
   MatCardTitle,
 } from '@angular/material/card';
 import {MatButton} from '@angular/material/button';
+import {NotificationService} from '../../../core/services/notification.service';
+import {Router} from '@angular/router';
 
-// Kiválasztott osztály jelölése valahogy és felbontani ClassSelectorService-re
 @Component({
   selector: 'app-selector',
   templateUrl: './selector.html',
@@ -27,9 +28,11 @@ import {MatButton} from '@angular/material/button';
     MatButton
   ]
 })
-export class Selector implements OnInit{
+export class Selector implements OnInit {
   protected classService = inject(ClassService);
   protected classSelectorService = inject(ClassSelectorService);
+  protected notificationService = inject(NotificationService);
+  protected router = inject(Router);
 
   classes: ClassDto[] = [];
 
@@ -37,5 +40,15 @@ export class Selector implements OnInit{
     this.classService.getAll().subscribe(classes => {
       this.classes = classes;
     });
+  }
+
+  handleClassSelection(schoolClass: ClassDto) {
+    this.classSelectorService.select(schoolClass).subscribe({
+        next: () => {
+          this.notificationService.open("Az osztály sikeresen kiválasztásra került!")
+          this.router.navigate(['/dashboard/students']);
+        }
+      }
+    )
   }
 }

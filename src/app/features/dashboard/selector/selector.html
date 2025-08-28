@@ -14,7 +14,7 @@
         {{ schoolClass.School?.name }}
       </mat-card-content>
       <mat-card-actions>
-        <button matButton (click)="this.classSelectorService.select(schoolClass)">Kiválasztás</button>
+        <button matButton (click)="this.handleClassSelection(schoolClass)">Kiválasztás</button>
         <button matButton>Törlés</button>
       </mat-card-actions>
     </mat-card>
