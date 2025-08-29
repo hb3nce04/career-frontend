@@ -7,7 +7,11 @@
   <table mat-table [dataSource]="this.data()" class="table-container" matSort>
     @for (col of this.columns(); track $index) {
       <ng-container [matColumnDef]="col.field">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> {{ col.header }}</th>
+        @if (col.sortable) {
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col.header }}</th>
+        } @else {
+          <th mat-header-cell *matHeaderCellDef>{{ col.header }}</th>
+        }
         <td mat-cell
             *matCellDef="let element"> {{ col.valueFn ? col.valueFn(element[col.field]) : element[col.field] }}
         </td>

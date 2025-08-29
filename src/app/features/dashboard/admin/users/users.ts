@@ -10,21 +10,22 @@ import {SharedTable, TableColumn} from '../../../../shared/components/shared-tab
     SharedTable
   ]
 })
-export class Users implements OnInit{
+export class Users implements OnInit {
   private userService = inject(UserService);
 
   data: UserDto[] = [];
   columns: TableColumn[] = [
     {
       field: 'id',
-      header: 'Azonosító'
+      header: 'Azonosító',
+      sortable: true
     },
     {
       field: 'is_admin',
       header: 'Jogosultság',
+      sortable: true,
       valueFn: (value: boolean) => value ? 'Admin' : 'Felhasználó'
-    }
-  ]
+    }]
 
   ngOnInit(): void {
     this.userService.getAll().subscribe(users => {

@@ -19,12 +19,12 @@ import {MatProgressSpinner} from '@angular/material/progress-spinner';
 export interface TableColumn {
   field: string;
   header: string;
+  sortable?: boolean;
   valueFn?: (value: any) => string;
 }
 
 export interface TableRow {}
 
-// TOOD: rendezés
 @Component({
   selector: 'app-shared-table',
   templateUrl: './shared-table.html',

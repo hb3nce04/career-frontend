@@ -20,13 +20,14 @@ export class Students implements OnInit {
   columns: TableColumn[] = [
     {
       header: 'Azonosító',
-      field: 'id'
+      field: 'id',
+      sortable: true,
     },
     {
       header: 'Név',
-      field: 'name'
-    }
-    ];
+      field: 'name',
+      sortable: true,
+    }]
 
   ngOnInit(): void {
     this.studentSerivce.getAllByClassId(this.selectedClass()!.id).subscribe(
