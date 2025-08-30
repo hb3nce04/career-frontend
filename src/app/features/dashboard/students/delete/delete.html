@@ -2,7 +2,7 @@
 <mat-dialog-content>
   <div>OM azonosító: <span>{{ this.data.student.id ?? 'N/A'  }}</span></div>
   <div>Név: <span>{{ this.data.student.name ?? 'N/A'  }}</span></div>
-  <div>Ágazat: <span>{{ this.data.student.Field?.name ?? 'N/A' }}</span></div>
+  <div>Ágazat: <span>{{ this.data.student.Sector?.name ?? 'N/A' }}</span></div>
   <div>Szakma: <span>{{ this.data.student.Profession?.name ?? 'N/A' }}</span></div>
   <div>Munkarend: <span>{{this.data.student.day_shift ? 'Nappali' : 'Esti'}}</span></div>
 </mat-dialog-content>

@@ -30,6 +30,27 @@ export class Students implements OnInit {
       header: 'Név',
       field: 'name',
       sortable: true,
+    },
+    {
+      header: 'Ágazat',
+      field: 'Sector',
+      valueFn: value => value["name"]
+    },{
+      header: 'Szakma',
+      field: 'Profession',
+      valueFn: value => value["name"]
+    },{
+      header: 'Munkarend',
+      field: 'day_shift',
+      valueFn: (row: StudentDto) => row.day_shift ? 'Nappali' : 'Esti'
+    },{
+      header: 'Pálya neve',
+      field: 'sectorName',
+      valueFn: (row: StudentDto) => row.Sector.name
+    },{
+      header: 'Pálya leírása',
+      field: 'fieldDescription',
+      valueFn: (row: StudentDto) => row.Field?.description
     }]
 
   ngOnInit(): void {

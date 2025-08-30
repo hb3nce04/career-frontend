@@ -6,8 +6,6 @@ export interface ClassDto {
   id: number;
   name: string;
   finishing_year: number;
-  school_id: number;
-  user_id: number;
 
   School?: SchoolDto;
   User?: UserDto;

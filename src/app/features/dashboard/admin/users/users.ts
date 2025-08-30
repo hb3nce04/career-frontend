@@ -27,7 +27,7 @@ export class Users implements OnInit {
       field: 'is_admin',
       header: 'Jogosultság',
       sortable: true,
-      valueFn: (value: boolean) => value ? 'Admin' : 'Felhasználó'
+      valueFn: (row: any) => row['is_admin'] ? 'Admin' : 'Felhasználó'
     }]
 
   ngOnInit(): void {

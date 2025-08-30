@@ -38,7 +38,7 @@ export interface TableColumn {
   field: string;
   header: string;
   sortable?: boolean;
-  valueFn?: (value: any) => string;
+  valueFn?: (row: any) => string;
 }
 
 export interface TableRow {}
