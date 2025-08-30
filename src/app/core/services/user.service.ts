@@ -29,4 +29,9 @@ export class UserService {
   delete(id: number): Observable<BaseResponseDto> {
     return this.httpClient.delete<BaseResponseDto>(`${this.apiUrl}/${id}`, {withCredentials: true});
   }
+
+  create(password: string, userDto: UserDto): Observable<BaseResponseDto> {
+    const {id, isAdmin} = userDto;
+    return this.httpClient.post<BaseResponseDto>(this.apiUrl, {id, password, isAdmin}, {withCredentials: true});
+  }
 }

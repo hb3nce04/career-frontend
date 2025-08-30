@@ -5,12 +5,14 @@ import {ClassSelectorService} from '../../../core/services/class-selector.servic
 import {SharedTable, TableColumn} from '../../../shared/components/shared-table/shared-table';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteStudentDialog} from './delete/delete';
+import {MatButton} from '@angular/material/button';
 
 @Component({
   selector: 'app-students',
   templateUrl: './students.html',
   imports: [
-    SharedTable
+    SharedTable,
+    MatButton
   ]
 })
 export class Students implements OnInit {

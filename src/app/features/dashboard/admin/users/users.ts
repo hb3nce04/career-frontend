@@ -4,12 +4,16 @@ import {UserDto} from '../../../../shared/dtos/user.dto';
 import {SharedTable, TableColumn} from '../../../../shared/components/shared-table/shared-table';
 import {DeleteUserDialog} from './delete/delete';
 import {MatDialog} from '@angular/material/dialog';
+import {MatButton} from '@angular/material/button';
+import {CreateUserDialog} from './create/create';
+import {EditUserDialog} from './edit/edit';
 
 @Component({
   selector: 'app-users',
   templateUrl: './users.html',
   imports: [
-    SharedTable
+    SharedTable,
+    MatButton
   ]
 })
 export class Users implements OnInit {
@@ -40,6 +44,26 @@ export class Users implements OnInit {
     this.dialog.open(DeleteUserDialog, {
       data: {
         user: $event
+      }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.ngOnInit();
+      }
+    })
+  }
+
+  handleCreate() {
+    this.dialog.open(CreateUserDialog).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.ngOnInit();
+      }
+    })
+  }
+
+  handleEdit(userDto: UserDto) {
+    this.dialog.open(EditUserDialog, {
+      data: {
+        user: userDto
       }
     }).afterClosed().subscribe((result: boolean) => {
       if (result) {
