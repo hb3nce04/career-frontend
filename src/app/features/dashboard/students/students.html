@@ -1,7 +1,8 @@
 <h1>Tanulók kezelése</h1>
-<button matButton="filled">Új tanuló hozzáadása</button>
+<button matButton="filled" (click)="handleCreate()">Új tanuló hozzáadása</button>
 <app-shared-table
   [columns]="columns"
   [data]="data"
   (delete)="handleDelete($event)"
+  (edit)="handleEdit($event)"
 />

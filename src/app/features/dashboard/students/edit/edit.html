@@ -1,0 +1,77 @@
+<h1 mat-dialog-title>Tanuló módosítása</h1>
+<form [formGroup]="createForm">
+  <mat-dialog-content>
+    <mat-form-field appearance="outline">
+      <mat-label>OM azonosító</mat-label>
+      <input matInput type="numeric" formControlName="id" autofocus>
+      @if (this.createForm.get('id')?.errors && createForm.get('id')?.touched) {
+        @if (this.createForm.get('id')?.errors?.['required']) {
+          <mat-error>OM azonosító megadása kötelező</mat-error>
+        } @else if (this.createForm.get('id')?.errors?.['pattern']) {
+          <mat-error>Hibás formátum</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Tanuló neve</mat-label>
+      <input matInput formControlName="name" autofocus>
+      @if (this.createForm.get('name')?.errors && createForm.get('name')?.touched) {
+        @if (this.createForm.get('name')?.errors?.['required']) {
+          <mat-error>Tanuló nevének megadása kötelező</mat-error>
+        } @else if (this.createForm.get('name')?.errors?.['pattern']) {
+          <mat-error>Hibás formátum</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Szakma / ágazat</mat-label>
+      <mat-select formControlName="professionOrSectorId">
+        <mat-optgroup label="Szakma">
+          @for (profession of this.data.professions; track $index) {
+            <mat-option [value]="profession.id+'p'">{{ profession.name }} - {{profession.number}}</mat-option>
+          }
+        </mat-optgroup>
+        <mat-optgroup label="Ágazat">
+          @for (sector of this.data.sectors; track $index) {
+            <mat-option [value]="sector.id+'s'">{{ sector.name }} - {{sector.number}}</mat-option>
+          }
+        </mat-optgroup>
+      </mat-select>
+      @if (this.createForm.get('professionOrSectorId')?.errors && createForm.get('professionOrSectorId')?.touched) {
+        @if (this.createForm.get('professionOrSectorId')?.errors?.['required']) {
+          <mat-error>A szakma / ágazat megadása kötelező.</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Pálya kategóriája</mat-label>
+      <mat-select formControlName="categoryId">
+        @for (category of this.data.categories; track $index) {
+          <mat-option [value]="category.id">{{ category.name }} </mat-option>
+        }
+      </mat-select>
+      @if (this.createForm.get('categoryId')?.errors && createForm.get('categoryId')?.touched) {
+        @if (this.createForm.get('categoryId')?.errors?.['required']) {
+          <mat-error>A pálya kategóriájának megadása kötelező.</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Pálya leírása</mat-label>
+      <textarea matInput formControlName="fieldDescription"></textarea>
+      <mat-hint>A pálya leírása maximum 255 karakter hosszú lehet.</mat-hint>
+      @if (this.createForm.get('fieldDescription')?.errors && createForm.get('fieldDescription')?.touched) {
+        @if (this.createForm.get('fieldDescription')?.errors?.['required']) {
+          <mat-error>A pálya nevének megadása kötelező.</mat-error>
+        } @else if (this.createForm.get('fieldDescription')?.errors?.['minlength'] || this.createForm.get('fieldDescription')?.errors?.['maxlength']) {
+          <mat-error>Hibás hossz.</mat-error>
+        }
+      }
+    </mat-form-field>
+    <mat-checkbox formControlName="isDayShift">Nappali munkarend</mat-checkbox>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
+    <button matButton (click)="handleSave()">Módosítás</button>
+  </mat-dialog-actions>
+</form>

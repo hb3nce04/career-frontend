@@ -17,4 +17,30 @@ export class StudentService {
   delete(id: number): Observable<BaseResponseDto> {
     return this.httpClient.delete<BaseResponseDto>(`${this.apiUrl}/${id}`, {withCredentials: true});
   }
+
+  create(classId: number, id: number, name: string, professionOrSectorId: string, categoryId: number, fieldDescription: string, isDayShift: boolean): Observable<BaseResponseDto> {
+    let sectorId = undefined;
+    let professionId = undefined;
+    if (professionOrSectorId.includes('p')) {
+      professionId = professionOrSectorId.replace('p', '');
+    } else if (professionOrSectorId.includes('s')) {
+      sectorId = professionOrSectorId.replace('s', '');
+    }
+    return this.httpClient.post<BaseResponseDto>(`${this.apiUrl}`, {
+      id, name, classId, dayShift: isDayShift, sectorId, professionId, categoryId, description: fieldDescription
+    }, {withCredentials: true});
+  }
+
+  update(classId: number, id: number, name: string, professionOrSectorId: string, categoryId: number, fieldDescription: string, isDayShift: boolean): Observable<BaseResponseDto> {
+    let sectorId = undefined;
+    let professionId = undefined;
+    if (professionOrSectorId.includes('p')) {
+      professionId = professionOrSectorId.replace('p', '');
+    } else if (professionOrSectorId.includes('s')) {
+      sectorId = professionOrSectorId.replace('s', '');
+    }
+    return this.httpClient.put<BaseResponseDto>(`${this.apiUrl}/${id}`, {
+      id, name, classId, dayShift: isDayShift, sectorId, professionId, categoryId, description: fieldDescription
+    }, {withCredentials: true});
+  }
 }
