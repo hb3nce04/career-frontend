@@ -1,4 +1,14 @@
-import {AfterViewInit, Component, computed, inject, input, InputSignal, OnChanges, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  computed,
+  inject,
+  input,
+  InputSignal,
+  OnChanges,
+  output,
+  ViewChild
+} from '@angular/core';
 import {
   MatCell,
   MatCellDef,
@@ -17,6 +27,7 @@ import {LoadingService} from '../../../core/services/loading.service';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatPaginator} from '@angular/material/paginator';
+import {MatButton} from '@angular/material/button';
 
 export interface TableProps {
   pageSize?: number;
@@ -50,20 +61,32 @@ export interface TableRow {}
     MatNoDataRow,
     MatSortModule,
     MatProgressSpinner,
-    MatPaginator
+    MatPaginator,
+    MatButton
   ]
 })
-export class SharedTable implements AfterViewInit, OnChanges{
+export class SharedTable<T> implements AfterViewInit, OnChanges{
   protected loadingService = inject(LoadingService);
 
   @ViewChild(MatSort) sort!: MatSort;
+
+  constantColumns: TableColumn[] = [
+    { field: 'actions', header: 'Műveletek' }
+  ];
 
   columns: InputSignal<TableColumn[]> = input.required();
   data: InputSignal<any> = input.required({});
   props: InputSignal<TableProps | undefined> = input();
 
-  displayedColumns = computed(() => this.columns().map((column) => column.field));
+  allColumns = computed(() => {
+    return [...this.columns(), ...this.constantColumns];
+  });
+
+  displayedColumns = computed(() => this.allColumns().map((column) => column.field));
   dataSource: MatTableDataSource<never> = new MatTableDataSource([]);
+
+  edit = output<T>();
+  delete = output<T>();
 
   ngOnChanges() {
     this.dataSource.data = this.data();
@@ -71,5 +94,13 @@ export class SharedTable implements AfterViewInit, OnChanges{
 
   ngAfterViewInit() {
     this.dataSource.sort = this.sort;
+  }
+
+  handleEdit(element: T) {
+    this.edit.emit(element);
+  }
+
+  handleDelete(element: T) {
+    this.delete.emit(element);
   }
 }

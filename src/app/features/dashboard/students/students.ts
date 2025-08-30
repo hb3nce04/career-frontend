@@ -1,8 +1,10 @@
 import {Component, computed, inject, OnInit} from '@angular/core';
-import {StudentService} from './service/student.service';
+import {StudentService} from './student.service';
 import {StudentDto} from '../../../shared/dtos/student.dto';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
 import {SharedTable, TableColumn} from '../../../shared/components/shared-table/shared-table';
+import {MatDialog} from '@angular/material/dialog';
+import {DeleteStudentDialog} from './delete/delete';
 
 @Component({
   selector: 'app-students',
@@ -15,6 +17,7 @@ export class Students implements OnInit {
   private classSelectorService: ClassSelectorService = inject(ClassSelectorService);
   private studentSerivce: StudentService = inject(StudentService);
   private selectedClass = computed(() => this.classSelectorService.selectedClassSubject.value);
+  protected dialog = inject(MatDialog);
 
   data: StudentDto[] = [];
   columns: TableColumn[] = [
@@ -35,5 +38,17 @@ export class Students implements OnInit {
         this.data = students;
       }
     )
+  }
+
+  handleDelete($event: StudentDto) {
+    this.dialog.open(DeleteStudentDialog, {
+      data: {
+        student: $event
+      }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.ngOnInit();
+      }
+    })
   }
 }

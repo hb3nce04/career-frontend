@@ -1,2 +1,2 @@
 <h1>Felhasználók</h1>
-<app-shared-table [data]="data" [columns]="columns"/>
+<app-shared-table [data]="data" [columns]="columns" (delete)="handleDelete($event)"/>

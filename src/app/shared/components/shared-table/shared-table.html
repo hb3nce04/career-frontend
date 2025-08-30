@@ -5,16 +5,23 @@
     </div>
   }
   <table mat-table [dataSource]="this.dataSource" class="table-container" matSort>
-    @for (col of this.columns(); track $index) {
+    @for (col of this.allColumns(); track $index) {
       <ng-container [matColumnDef]="col.field">
         @if (col.sortable) {
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col.header }}</th>
         } @else {
           <th mat-header-cell *matHeaderCellDef>{{ col.header }}</th>
         }
-        <td mat-cell
-            *matCellDef="let element"> {{ col.valueFn ? col.valueFn(element[col.field]) : element[col.field] }}
-        </td>
+        @if (col.field === 'actions') {
+          <td mat-cell *matCellDef="let element">
+            <button mat-button (click)="handleEdit(element)">Szerkesztés</button>
+            <button mat-button (click)="handleDelete(element)">Törlés</button>
+          </td>
+        } @else {
+          <td mat-cell
+              *matCellDef="let element"> {{ col.valueFn ? col.valueFn(element[col.field]) : element[col.field] }}
+          </td>
+        }
       </ng-container>
     }
     <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>

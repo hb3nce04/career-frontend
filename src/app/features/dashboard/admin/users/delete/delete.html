@@ -1,0 +1,9 @@
+<h1 mat-dialog-title>Biztosan törölni szeretnéd az alábbi felhasználót?</h1>
+<mat-dialog-content>
+  <div>OM azonosító: <span>{{ this.data.user.id ?? 'N/A'  }}</span></div>
+  <div>Jogosultság: <span>{{ this.data.user.is_admin ? 'Admin' : 'Felhasználó'  }}</span></div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="handleClose()">Nem</button>
+  <button matButton (click)="handleDelete()" cdkFocusInitial>Igen</button>
+</mat-dialog-actions>

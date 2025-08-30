@@ -25,4 +25,8 @@ export class UserService {
       }
     );
   }
+
+  delete(id: number): Observable<BaseResponseDto> {
+    return this.httpClient.delete<BaseResponseDto>(`${this.apiUrl}/${id}`, {withCredentials: true});
+  }
 }
