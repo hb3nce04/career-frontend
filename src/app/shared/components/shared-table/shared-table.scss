@@ -1,5 +1,8 @@
 .container {
   position: relative;
+  max-height: calc(65vh);
+  overflow: auto;
+
   .loading-shade {
     position: absolute;
     top: 0;
@@ -12,9 +15,14 @@
     align-items: center;
     justify-content: center;
   }
+
   .table-container {
     position: relative;
     max-height: 400px;
     overflow: auto;
+
+    :hover {
+      background-color: rgba(0, 0, 0, 0.1);
+    }
   }
 }

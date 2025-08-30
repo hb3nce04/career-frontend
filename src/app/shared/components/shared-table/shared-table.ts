@@ -10,11 +10,18 @@ import {
   MatNoDataRow,
   MatRow,
   MatRowDef,
-  MatTable, MatTableDataSource
+  MatTable,
+  MatTableDataSource
 } from '@angular/material/table';
 import {LoadingService} from '../../../core/services/loading.service';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
+import {MatPaginator} from '@angular/material/paginator';
+
+export interface TableProps {
+  pageSize?: number;
+  pageSizeOptions?: number[];
+}
 
 export interface TableColumn {
   field: string;
@@ -42,7 +49,8 @@ export interface TableRow {}
     MatCellDef,
     MatNoDataRow,
     MatSortModule,
-    MatProgressSpinner
+    MatProgressSpinner,
+    MatPaginator
   ]
 })
 export class SharedTable implements AfterViewInit, OnChanges{
@@ -52,6 +60,7 @@ export class SharedTable implements AfterViewInit, OnChanges{
 
   columns: InputSignal<TableColumn[]> = input.required();
   data: InputSignal<any> = input.required({});
+  props: InputSignal<TableProps | undefined> = input();
 
   displayedColumns = computed(() => this.columns().map((column) => column.field));
   dataSource: MatTableDataSource<never> = new MatTableDataSource([]);
