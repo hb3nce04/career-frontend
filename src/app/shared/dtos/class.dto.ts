@@ -11,3 +11,7 @@ export interface ClassDto {
   User?: UserDto;
   Student?: Students[];
 }
+
+export interface ClassStatisticsDto {
+  countStudentsInClass: number;
+}
