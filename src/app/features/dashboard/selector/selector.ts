@@ -17,6 +17,7 @@ import {AsyncPipe} from '@angular/common';
 import {CreateClassDialog} from './create/create';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteClassDialog} from './delete/delete';
+import {EditClassDialog} from './edit/edit';
 
 @Component({
   selector: 'app-selector',
@@ -90,6 +91,18 @@ export class Selector implements OnInit {
 
   handleClassDelete(schoolClass: ClassDto) {
     this.dialog.open(DeleteClassDialog, {
+      data: {
+        class: schoolClass
+      }
+    }).afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.loadClasses();
+      }
+    })
+  }
+
+  handleClassEdit(schoolClass: ClassDto) {
+    this.dialog.open(EditClassDialog, {
       data: {
         class: schoolClass
       }

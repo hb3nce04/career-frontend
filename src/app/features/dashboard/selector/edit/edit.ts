@@ -1,44 +1,34 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {
-  MAT_DIALOG_DATA,
-  MatDialogActions,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogRef,
-  MatDialogTitle
-} from '@angular/material/dialog';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
+import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
 import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
-import {MatButton} from '@angular/material/button';
 import {SchoolDto} from '../../../../shared/dtos/school.dto';
 import {SchoolService} from '../school.service';
-import {MatOption, MatSelect} from '@angular/material/select';
 import {ClassService} from '../class.service';
 import {NotificationService} from '../../../../core/services/notification.service';
+import {MatFormField} from '@angular/material/form-field';
+import {MatSelect, MatOption} from '@angular/material/select';
+import {MatButton} from '@angular/material/button';
+import {MatError, MatInput, MatLabel} from '@angular/material/input';
 
 @Component({
-  selector: 'app-create-class-dialog',
-  templateUrl: './create.html',
-  styleUrl: './create.scss',
+  selector: 'app-edit-class-dialog',
+  templateUrl: './edit.html',
+  styleUrl: './edit.scss',
   imports: [
     MatDialogModule,
-    MatDialogTitle,
-    MatDialogContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
-    MatDialogActions,
     FormsModule,
-    MatButton,
+    ReactiveFormsModule,
+    MatFormField,
     MatOption,
     MatSelect,
-    ReactiveFormsModule,
+    MatButton,
+    MatInput,
+    MatLabel,
     MatError
   ]
 })
-export class CreateClassDialog implements OnInit{
-  readonly dialogRef = inject(MatDialogRef<CreateClassDialog>);
+export class EditClassDialog implements OnInit{
+  readonly dialogRef = inject(MatDialogRef<EditClassDialog>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
   protected classService = inject(ClassService);
   protected schoolService = inject(SchoolService);
@@ -48,9 +38,9 @@ export class CreateClassDialog implements OnInit{
   schools: SchoolDto[] = [];
 
   form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    finishingYear: new FormControl('', [Validators.required]),
-    schoolId: new FormControl('', [Validators.required]),
+    name: new FormControl(this.data.class.name, [Validators.required]),
+    finishingYear: new FormControl(this.data.class.finishing_year, [Validators.required]),
+    schoolId: new FormControl(this.data.class.School.id, [Validators.required]),
   });
 
   ngOnInit(): void {
@@ -65,14 +55,14 @@ export class CreateClassDialog implements OnInit{
   handleSave() {
    if (this.form.valid) {
      const {name, finishingYear, schoolId} = this.form.value;
-     this.classService.create(name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
+     this.classService.update(this.data.class.id, name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
        next: result => {
          this.notificationService.open(result.message)
          this.dialogRef.close(true);
        },
        error: response => {
          const error = response.error;
-         this.notificationService.open(error.message ?? 'Hiba történt az osztály létrehozása során!')
+         this.notificationService.open(error.message ?? 'Hiba történt az osztály módosítása során!')
        }}
      )
    }

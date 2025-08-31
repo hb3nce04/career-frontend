@@ -25,4 +25,12 @@ export class ClassService {
   delete(id: number): Observable<BaseResponseDto> {
     return this.httpClient.delete<BaseResponseDto>(this.apiUrl + "/" + id, {withCredentials: true});
   }
+
+  update(id: number, name: string, finishingYear: number, schoolId: number): Observable<BaseResponseDto> {
+    return this.httpClient.put<BaseResponseDto>(this.apiUrl + "/" + id, {
+      name: name,
+      finishingYear: finishingYear,
+      schoolId: schoolId,
+    }, {withCredentials: true});
+  }
 }

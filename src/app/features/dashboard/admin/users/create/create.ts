@@ -38,15 +38,15 @@ export class CreateUserDialog {
   protected userService = inject(UserService);
   protected notificationService = inject(NotificationService);
 
-  createForm = new FormGroup({
+  form = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
     isAdmin: new FormControl(false)
   });
 
   handleSave() {
-   if (this.createForm.valid) {
-     const {id, password, isAdmin} = this.createForm.value;
+   if (this.form.valid) {
+     const {id, password, isAdmin} = this.form.value;
      // @ts-ignore
      this.userService.create(password!, {id, isAdmin}).subscribe({
        next: result => {

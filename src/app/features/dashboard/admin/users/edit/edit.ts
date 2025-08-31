@@ -40,17 +40,15 @@ export class EditUserDialog {
   protected userService = inject(UserService);
   protected notificationService = inject(NotificationService);
 
-  editForm = new FormGroup({
+  form = new FormGroup({
     id: new FormControl(this.data.user.id, [Validators.required, Validators.pattern('^[0-9]{11}$')]),
     password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
     isAdmin: new FormControl(this.data.user.is_admin)
   });
 
+  // TODO:
   handleSave() {
-   if (this.editForm.valid) {
-     const {id, password, isAdmin} = this.editForm.value;
-     // @ts-ignore
-     // TODO: endpoint
+   if (this.form.valid) {
    }
   }
 

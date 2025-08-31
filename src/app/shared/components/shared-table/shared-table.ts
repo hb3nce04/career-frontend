@@ -27,7 +27,9 @@ import {LoadingService} from '../../../core/services/loading.service';
 import {MatSort, MatSortModule} from '@angular/material/sort';
 import {MatProgressSpinner} from '@angular/material/progress-spinner';
 import {MatPaginator} from '@angular/material/paginator';
-import {MatButton} from '@angular/material/button';
+import {MatButton, MatIconButton} from '@angular/material/button';
+import {MatIcon} from '@angular/material/icon';
+import {MatTooltip} from '@angular/material/tooltip';
 
 export interface TableProps {
   pageSize?: number;
@@ -39,6 +41,9 @@ export interface TableColumn {
   header: string;
   sortable?: boolean;
   valueFn?: (row: any) => string;
+  type?: 'button';
+  buttonText?: string;
+  buttonAction?: (row: any) => void;
 }
 
 export interface TableRow {}
@@ -62,7 +67,10 @@ export interface TableRow {}
     MatSortModule,
     MatProgressSpinner,
     MatPaginator,
-    MatButton
+    MatButton,
+    MatIcon,
+    MatIconButton,
+    MatTooltip
   ]
 })
 export class SharedTable<T> implements AfterViewInit, OnChanges{

@@ -47,19 +47,19 @@ export class CreateStudentDialog {
   protected notificationService = inject(NotificationService);
   protected classSelector = inject(ClassSelectorService);
 
-  createForm = new FormGroup({
+  form = new FormGroup({
     id: new FormControl('', [Validators.required, Validators.pattern('^[0-9]{11}$')]),
     name: new FormControl('', [Validators.required, Validators.pattern('^[^\\d\'"`\\\\]{2,100}$')]),
     professionOrSectorId: new FormControl('', [Validators.required]),
-    fieldCategoryId: new FormControl('', [Validators.required]),
-    fieldDescription: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
-    isDayShift: new FormControl('', [Validators.required]),
+    categoryId: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(255)]),
+    isDayShift: new FormControl('', []),
   });
 
   handleSave() {
-   if (this.createForm.valid) {
-     const {id, name, professionOrSectorId, fieldCategoryId, fieldDescription, isDayShift} = this.createForm.value;
-     this.studentService.create(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(fieldCategoryId!), fieldDescription!, !!isDayShift).subscribe({
+   if (this.form.valid) {
+     const {id, name, professionOrSectorId, categoryId, description, isDayShift} = this.form.value;
+     this.studentService.create(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
        next: result => {
          this.notificationService.open(result.message)
          this.dialogRef.close(true);

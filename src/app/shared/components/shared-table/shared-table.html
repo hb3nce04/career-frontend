@@ -14,13 +14,23 @@
         }
         @if (col.field === 'actions') {
           <td mat-cell *matCellDef="let element">
-            <button mat-button (click)="handleEdit(element)">Szerkesztés</button>
-            <button mat-button (click)="handleDelete(element)">Törlés</button>
+            <button mat-icon-button matTooltip="Módosítás" (click)="handleEdit(element)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="Törlés" (click)="handleDelete(element)">
+              <mat-icon>delete</mat-icon>
+            </button>
           </td>
         } @else {
-          <td mat-cell
-              *matCellDef="let element"> {{ (col.valueFn ? col.valueFn(element) : element[col.field]) ?? 'N/A' }}
-          </td>
+          @if (col.type === 'button') {
+            <td mat-cell *matCellDef="let element">
+              <button matButton="text" (click)="col.buttonAction!(element)">{{col.buttonText}}</button>
+            </td>
+          } @else {
+            <td mat-cell
+                *matCellDef="let element"> {{ (col.valueFn ? col.valueFn(element) : element[col.field]) ?? 'N/A' }}
+            </td>
+          }
         }
       </ng-container>
     }

@@ -13,6 +13,7 @@ import {CategoryService} from './category.service';
 import {forkJoin} from 'rxjs';
 import {SectorService} from './sector.service';
 import {EditStudentDialog} from './edit/edit';
+import {ViewStudentFieldDialog} from './view/view';
 
 @Component({
   selector: 'app-students',
@@ -43,27 +44,16 @@ export class Students implements OnInit {
       header: 'Név',
       field: 'name',
       sortable: true,
-    },
-    {
-      header: 'Ágazat',
-      field: 'Sector',
-      valueFn: value => value["name"]
-    },{
-      header: 'Szakma',
-      field: 'Profession',
-      valueFn: value => value["name"]
     },{
       header: 'Munkarend',
       field: 'day_shift',
       valueFn: (row: StudentDto) => row.day_shift ? 'Nappali' : 'Esti'
-    },{
-      header: 'Pálya neve',
-      field: 'sectorName',
-      valueFn: (row: StudentDto) => row.Sector?.name
-    },{
-      header: 'Pálya leírása',
-      field: 'fieldDescription',
-      valueFn: (row: StudentDto) => row.Field?.description
+    }, {
+      header: 'Pálya megtekintése',
+      field: 'viewField',
+      type: 'button',
+      buttonText: 'Megtekintés',
+      buttonAction: (row: StudentDto) => this.handleFieldView(row)
     }]
 
   ngOnInit(): void {
@@ -92,9 +82,9 @@ export class Students implements OnInit {
       categories: this.categoryService.getAll(),
       sectors: this.sectorService.getAll(),
     }).subscribe({
-      next: ({ professions, categories, sectors }) => {
+      next: ({professions, categories, sectors}) => {
         this.dialog.open(CreateStudentDialog, {
-          data: { professions, categories, sectors }
+          data: {professions, categories, sectors}
         }).afterClosed().subscribe((result: boolean) => {
           if (result) {
             this.ngOnInit();
@@ -111,18 +101,18 @@ export class Students implements OnInit {
   handleEdit(studentDto: StudentDto) {
     let professionOrSectorId = undefined;
     if (studentDto.Profession) {
-      professionOrSectorId = studentDto.Profession.id+"p"
+      professionOrSectorId = studentDto.Profession.id + "p"
     } else if (studentDto.Sector) {
-      professionOrSectorId = studentDto.Sector.id+"s"
+      professionOrSectorId = studentDto.Sector.id + "s"
     }
     forkJoin({
       professions: this.professionService.getAll(),
       categories: this.categoryService.getAll(),
       sectors: this.sectorService.getAll(),
     }).subscribe({
-      next: ({ professions, categories, sectors }) => {
+      next: ({professions, categories, sectors}) => {
         this.dialog.open(EditStudentDialog, {
-          data: { professions, categories, sectors, student: {...studentDto, professionOrSectorId} }
+          data: {professions, categories, sectors, student: {...studentDto, professionOrSectorId}}
         }).afterClosed().subscribe((result: boolean) => {
           if (result) {
             this.ngOnInit();
@@ -132,6 +122,14 @@ export class Students implements OnInit {
       error: (err) => {
         this.notificationService.open('Hiba történt az adatok betöltése során!');
         console.error(err);
+      }
+    });
+  }
+
+  private handleFieldView(row: StudentDto) {
+    this.dialog.open(ViewStudentFieldDialog, {
+      data: {
+        student: row
       }
     });
   }

@@ -18,6 +18,7 @@
           <button matButton (click)="this.handleClassUnselection()">Kiválasztás törlése</button>
         } @else {
           <button matButton (click)="this.handleClassSelection(schoolClass)">Kiválasztás</button>
+          <button matButton (click)="this.handleClassEdit(schoolClass)">Módosítás</button>
           <button matButton (click)="this.handleClassDelete(schoolClass)">Törlés</button>
         }
       </mat-card-actions>
