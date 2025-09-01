@@ -1,5 +1,5 @@
-<h1>Főoldal</h1>
 @if (this.selectedClass() !== null) {
+  <h1>Főoldal</h1>
   <div class="card-container">
     <mat-card>
       <mat-card-header>
@@ -22,6 +22,8 @@
     </mat-card>
   </div>
 } @else {
-  <h2>Válassz ki egy osztályt a folytatáshoz!</h2>
-  <button matButton="tonal" routerLink="/dashboard/selector">Kiválasztom</button>
+  <div class="title">
+    <h1>Válassz ki egy osztályt a folytatáshoz!</h1>
+    <button matButton="tonal" routerLink="/dashboard/selector">Kiválasztás</button>
+  </div>
 }

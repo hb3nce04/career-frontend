@@ -1,8 +1,15 @@
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .selector-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 1rem;
+  margin-top: 1rem;
   .new-card {
     display: flex;
     align-items: center;

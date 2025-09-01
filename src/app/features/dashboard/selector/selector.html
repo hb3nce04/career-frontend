@@ -1,8 +1,8 @@
-<h1>Osztály kiválasztása</h1>
+<div class="title">
+  <h1>Osztály kiválasztása</h1>
+  <button matButton="filled" (click)="handleClassCreate()">Új osztály hozzáadása</button>
+</div>
 <div class="selector-container">
-  <div class="new-card">
-    <button matButton (click)="handleClassCreate()">Osztály hozzáadása</button>
-  </div>
   @for (schoolClass of classes; track schoolClass.id) {
     <mat-card appearance="outlined"
               [class]="(this.classSelectorService.selectedClass$ | async)?.id === schoolClass.id ? 'selected' : ''">

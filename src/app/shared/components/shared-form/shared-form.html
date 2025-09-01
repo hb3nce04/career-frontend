@@ -30,17 +30,15 @@
 
         } @else if (field.type == 'textarea') {
           <textarea matInput [formControlName]="field.name"></textarea>
-          @if (field.hint) {
-            <ng-container>
-              <mat-hint>{{ field.hint }}</mat-hint>
-            </ng-container>
-          }
         }
         <ng-container>
           @for (error of errorKeys(field.name); track $index) {
             <mat-error>{{ messageFor(field.name, error) }}</mat-error>
           }
         </ng-container>
+        @if (field.hint) {
+          <mat-hint>{{ field.hint }}</mat-hint>
+        }
       </mat-form-field>
     }
     <ng-content select="[submit-button]"></ng-content>

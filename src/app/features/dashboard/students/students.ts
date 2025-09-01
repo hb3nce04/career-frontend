@@ -18,6 +18,13 @@ import {ViewStudentFieldDialog} from './view/view';
 @Component({
   selector: 'app-students',
   templateUrl: './students.html',
+  styles: `
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  `,
   imports: [
     SharedTable,
     MatButton

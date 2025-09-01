@@ -91,7 +91,7 @@ export class EditStudentDialog {
       type: 'textarea',
       value: this.data.student.Field.description,
       validators: [Validators.required],
-      options: []
+      hint: 'A pálya leírása maximum 255 karakter hosszú lehet.'
     },
     {
       name: 'isDayShift',

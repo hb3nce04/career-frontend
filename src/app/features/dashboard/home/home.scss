@@ -7,3 +7,9 @@
     color: var(--mat-sys-primary)
   }
 }
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}

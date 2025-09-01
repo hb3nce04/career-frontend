@@ -79,14 +79,14 @@ export class CreateStudentDialog {
       validators: [Validators.required],
       options: this.data.categories.map((category: CategoryDto) => {
         return {value: category.id, label: category.name};
-      })
+      }),
     },
     {
       name: 'description',
       label: 'Pálya leírása',
       type: 'textarea',
       validators: [Validators.required],
-      options: []
+      hint: 'A pálya leírása maximum 255 karakter hosszú lehet.'
     },
     {
       name: 'isDayShift',

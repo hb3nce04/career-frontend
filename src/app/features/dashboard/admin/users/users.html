@@ -1,3 +1,5 @@
-<h1>Felhasználók</h1>
-<button matButton="filled" (click)="handleCreate()">Új felhasználó hozzáadása</button>
+<div class="title">
+  <h1>Felhasználók</h1>
+  <button matButton="filled" (click)="handleCreate()">Új felhasználó hozzáadása</button>
+</div>
 <app-shared-table [data]="data" [columns]="columns" (delete)="handleDelete($event)" (edit)="handleEdit($event)"/>

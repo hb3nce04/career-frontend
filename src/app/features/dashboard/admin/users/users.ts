@@ -11,6 +11,13 @@ import {EditUserDialog} from './edit/edit';
 @Component({
   selector: 'app-users',
   templateUrl: './users.html',
+  styles: `
+    .title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+  `,
   imports: [
     SharedTable,
     MatButton
