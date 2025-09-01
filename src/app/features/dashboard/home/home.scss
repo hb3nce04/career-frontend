@@ -1,9 +1,8 @@
-.cards {
+.card-container {
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 1rem;
-  mat-card{
-    width: 500px;
-  }
   span {
     color: var(--mat-sys-primary)
   }

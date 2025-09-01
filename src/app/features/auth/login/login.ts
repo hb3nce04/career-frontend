@@ -6,6 +6,7 @@ import {NotificationService} from '../../../core/services/notification.service';
 import {Router} from '@angular/router';
 import {FieldConfig, SharedForm} from '../../../shared/components/shared-form/shared-form';
 import {MatButton} from '@angular/material/button';
+import {ThemeService} from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-login',
@@ -21,6 +22,7 @@ export class Login {
   private authService: AuthService = inject(AuthService);
   protected loadingService: LoadingService = inject(LoadingService);
   protected notificationService: NotificationService = inject(NotificationService);
+  protected themeService: ThemeService = inject(ThemeService);
   protected router: Router = inject(Router);
 
   fields: FieldConfig[] = [

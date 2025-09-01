@@ -15,7 +15,7 @@ import {LoadingService} from '../../core/services/loading.service';
   ],
   styles: `
     .page-content {
-      padding: 20px 50px;
+      padding: 20px 100px;
     }
   `,
   template: `

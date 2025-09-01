@@ -7,6 +7,7 @@ import {UserService} from '../../../core/services/user.service';
 import {NotificationService} from '../../../core/services/notification.service';
 import {FieldConfig, SharedForm} from '../../../shared/components/shared-form/shared-form';
 import {CustomValidators} from '../../../shared/validators/custom.validator';
+import {ThemeService} from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-profile',
@@ -23,6 +24,7 @@ export class Profile {
   protected authService: AuthService = inject(AuthService);
   protected loadingService: LoadingService = inject(LoadingService);
   protected userService: UserService = inject(UserService);
+  protected themeService: ThemeService = inject(ThemeService);
   private notificationService: NotificationService = inject(NotificationService);
 
   customValidators: ValidatorFn[] = [

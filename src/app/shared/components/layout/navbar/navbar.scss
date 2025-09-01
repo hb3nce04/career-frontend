@@ -4,25 +4,24 @@
   background-color: var(--mat-sys-on-primary);
   color: var(--mat-sys-primary);
 
+  .app-logo {
+    width: 42px;
+    height: 42px;
+  }
+
   .app-title {
     cursor: pointer;
     font-family: monospace;
     font-weight: 700;
     letter-spacing: 0.3rem;
+    margin: 0 25px;
   }
 
   .spacer {
     flex: 1 1 auto;
   }
 
-  .user-details {
-    margin-right: 1rem;
-    font-size: 1rem;
-  }
-
   .avatar {
-    width: 32px;
-    height: 32px;
     border-radius: 50%;
   }
 }

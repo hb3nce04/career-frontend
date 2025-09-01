@@ -1,4 +1,5 @@
 <h1>Profil</h1>
+<img class="logo" [src]="this.themeService.darkModeSubject.value ? 'lightprofile.png' : 'darkprofile.png'"/>
 <div>OM azonosító: <span>{{ this.authService.getId() }}</span></div>
 <div>Jogosultság: <span>{{ this.authService.getRole() }}</span></div>
 <div class="form-container">

@@ -1,4 +1,5 @@
 <mat-toolbar>
+  <img class="app-logo" [src]="this.themeService.darkModeSubject.value ? 'lightfingerprint.svg' : 'darkfingerprint.svg'"/>
   <span class="app-title" routerLink="/">Pályakövetés</span>
   @for (link of NAV_LINKS; track $index) {
     @if (!link.isProtected || (link.isProtected && this.authService.getIsAdmin())) {
@@ -8,14 +9,11 @@
     }
   }
   <span class="spacer"></span>
-  <span class="user-details">
-    OM azonosítód: {{ this.authService.getId() }} ({{ this.authService.getRole() }})
-  </span>
   <button mat-icon-button (click)="this.themeService.toggleDarkMode()">
     <mat-icon>{{ this.themeService.darkModeSubject.value ? 'light_mode' : 'dark_mode' }}</mat-icon>
   </button>
   <button mat-icon-button [matMenuTriggerFor]="userMenu">
-    <img class="avatar" src="/assets/avatar.jpg"/>
+    <img class="avatar" src="profile.webp"/>
   </button>
   <mat-menu #userMenu="matMenu">
     <button mat-menu-item routerLink="/dashboard/profile">
