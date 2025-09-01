@@ -43,7 +43,7 @@ export class Students implements OnInit {
   data: StudentDto[] = [];
   columns: TableColumn[] = [
     {
-      header: 'Azonosító',
+      header: 'OM azonosító',
       field: 'id',
       sortable: true,
     },
@@ -60,7 +60,8 @@ export class Students implements OnInit {
       field: 'viewField',
       type: 'button',
       buttonText: 'Megtekintés',
-      buttonAction: (row: StudentDto) => this.handleFieldView(row)
+      buttonAction: (row: StudentDto) => this.handleFieldView(row),
+      hideFromExport: true
     }]
 
   ngOnInit(): void {

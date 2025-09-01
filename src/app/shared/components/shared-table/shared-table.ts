@@ -30,6 +30,10 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatTooltip} from '@angular/material/tooltip';
+import {MatCheckbox} from '@angular/material/checkbox';
+import {SelectionModel} from '@angular/cdk/collections';
+import {ExportDataDialog} from './export/export';
+import {MatDialog} from '@angular/material/dialog';
 
 export interface TableProps {
   pageSize?: number;
@@ -44,6 +48,7 @@ export interface TableColumn {
   type?: 'button';
   buttonText?: string;
   buttonAction?: (row: any) => void;
+  hideFromExport?: boolean;
 }
 
 export interface TableRow {}
@@ -70,24 +75,22 @@ export interface TableRow {}
     MatButton,
     MatIcon,
     MatIconButton,
-    MatTooltip
+    MatTooltip,
+    MatCheckbox
   ]
 })
 export class SharedTable<T> implements AfterViewInit, OnChanges{
   protected loadingService = inject(LoadingService);
+  protected dialog = inject(MatDialog);
 
   @ViewChild(MatSort) sort!: MatSort;
-
-  constantColumns: TableColumn[] = [
-    { field: 'actions', header: 'Műveletek' }
-  ];
 
   columns: InputSignal<TableColumn[]> = input.required();
   data: InputSignal<any> = input.required({});
   props: InputSignal<TableProps | undefined> = input();
 
   allColumns = computed(() => {
-    return [...this.columns(), ...this.constantColumns];
+    return [{field: 'select', header: ''}, ...this.columns(), { field: 'actions', header: 'Műveletek'}];
   });
 
   displayedColumns = computed(() => this.allColumns().map((column) => column.field));
@@ -96,8 +99,25 @@ export class SharedTable<T> implements AfterViewInit, OnChanges{
   edit = output<T>();
   delete = output<T>();
 
+  selection = new SelectionModel<T>(true, []);
+
   ngOnChanges() {
     this.dataSource.data = this.data();
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+
+    this.selection.select(...this.dataSource.data);
   }
 
   ngAfterViewInit() {
@@ -110,5 +130,15 @@ export class SharedTable<T> implements AfterViewInit, OnChanges{
 
   handleDelete(element: T) {
     this.delete.emit(element);
+  }
+
+  handleExport() {
+    const columns: TableColumn[] = this.columns().filter(col => !col.hideFromExport);
+    this.dialog.open(ExportDataDialog, {
+      data: {
+        data: this.dataSource.data,
+        columns,
+      }
+    })
   }
 }

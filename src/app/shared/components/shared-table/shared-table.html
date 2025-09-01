@@ -1,3 +1,8 @@
+<div class="toolbar">
+  <button mat-icon-button matTooltip="Adatok letöltése" (click)="handleExport()">
+    <mat-icon>download</mat-icon>
+  </button>
+</div>
 <div class="container mat-elevation-z8">
   @if (this.loadingService.loadingSubject.value) {
     <div class="loading-shade">
@@ -9,6 +14,13 @@
       <ng-container [matColumnDef]="col.field">
         @if (col.sortable) {
           <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ col.header }}</th>
+        } @else if (col.field === 'select') {
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </th>
         } @else {
           <th mat-header-cell *matHeaderCellDef>{{ col.header }}</th>
         }
@@ -20,6 +32,13 @@
             <button mat-icon-button matTooltip="Törlés" (click)="handleDelete(element)">
               <mat-icon>delete</mat-icon>
             </button>
+          </td>
+        } @else if (col.field === 'select') {
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
           </td>
         } @else {
           @if (col.type === 'button') {

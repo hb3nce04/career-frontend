@@ -31,7 +31,7 @@ export class Users implements OnInit {
   columns: TableColumn[] = [
     {
       field: 'id',
-      header: 'Azonosító',
+      header: 'OM azonosító',
       sortable: true
     },
     {
