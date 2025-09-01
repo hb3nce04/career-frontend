@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -7,15 +7,12 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {SchoolDto} from '../../../../shared/dtos/school.dto';
-import {SchoolService} from '../school.service';
-import {MatOption, MatSelect} from '@angular/material/select';
 import {ClassService} from '../class.service';
 import {NotificationService} from '../../../../core/services/notification.service';
+import {FieldConfig, Option, SharedForm} from '../../../../shared/components/shared-form/shared-form';
+import {SchoolDto} from '../../../../shared/dtos/school.dto';
 
 @Component({
   selector: 'app-create-class-dialog',
@@ -25,57 +22,61 @@ import {NotificationService} from '../../../../core/services/notification.servic
     MatDialogModule,
     MatDialogTitle,
     MatDialogContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatDialogActions,
     FormsModule,
     MatButton,
-    MatOption,
-    MatSelect,
     ReactiveFormsModule,
-    MatError
+    SharedForm
   ]
 })
-export class CreateClassDialog implements OnInit{
+export class CreateClassDialog {
   readonly dialogRef = inject(MatDialogRef<CreateClassDialog>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
   protected classService = inject(ClassService);
-  protected schoolService = inject(SchoolService);
   protected notificationService = inject(NotificationService);
 
-  finishingYears: number[] = [];
-  schools: SchoolDto[] = [];
+  fields: WritableSignal<FieldConfig[]> = signal([
+    {
+      name: 'name',
+      label: 'Osztály neve',
+      type: 'text',
+      autofocus: true,
+      validators: [Validators.required, Validators.pattern("^[^'\"`\\\\;=()]{2,50}$")]
+    },
+    {
+      name: 'finishingYear',
+      label: 'Végzési év',
+      type: 'select',
+      validators: [Validators.required],
+      options: Array.from({length: 25 + 1}, (_, i) => {
+        const computed = new Date().getFullYear() - 25 + i;
+        return {value: computed, label: computed} as Option;
+      })
+    },
+    {
+      name: 'schoolId',
+      label: 'Iskola',
+      type: 'select',
+      validators: [Validators.required],
+      options: this.data.schools.map((school: SchoolDto) => {
+        return {value: school.id, label: school.name};
+      })
+    },
+  ]);
 
-  form = new FormGroup({
-    name: new FormControl('', [Validators.required]),
-    finishingYear: new FormControl('', [Validators.required]),
-    schoolId: new FormControl('', [Validators.required]),
-  });
-
-  ngOnInit(): void {
-    const interval = 25;
-    const currentYear = new Date().getFullYear() - interval;
-    this.finishingYears = Array.from({ length: interval+1 }, (_, i) => currentYear + i);
-    this.schoolService.getAll().subscribe(schools => {
-      this.schools = schools;
-    });
-  }
-
-  handleSave() {
-   if (this.form.valid) {
-     const {name, finishingYear, schoolId} = this.form.value;
-     this.classService.create(name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
-       next: result => {
-         this.notificationService.open(result.message)
-         this.dialogRef.close(true);
-       },
-       error: response => {
-         const error = response.error;
-         this.notificationService.open(error.message ?? 'Hiba történt az osztály létrehozása során!')
-       }}
-     )
-   }
+  handleSave(values: any) {
+    const {name, finishingYear, schoolId} = values;
+    this.classService.create(name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
+        next: result => {
+          this.notificationService.open(result.message)
+          this.dialogRef.close(true);
+        },
+        error: response => {
+          const error = response.error;
+          this.notificationService.open(error.message ?? 'Hiba történt az osztály létrehozása során!')
+        }
+      }
+    )
   }
 
   handleClose() {

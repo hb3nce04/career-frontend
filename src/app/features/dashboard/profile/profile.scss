@@ -2,9 +2,7 @@ span {
   color: var(--mat-sys-primary)
 }
 
-form {
-  margin: 10px 0;
-  display: flex;
-  flex-direction: column;
+.form-container {
+  margin: 20px 0;
   width: 300px;
 }

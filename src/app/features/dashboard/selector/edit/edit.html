@@ -1,44 +1,8 @@
 <h1 mat-dialog-title>Osztály módosítása</h1>
-<form [formGroup]="form">
-  <mat-dialog-content>
-    <mat-form-field>
-      <mat-label>Osztály neve</mat-label>
-      <input matInput formControlName="name"/>
-      @if (this.form.get('name')?.errors && form.get('name')?.touched) {
-        @if (this.form.get('name')?.errors?.['required']) {
-          <mat-error>Az osztálynév megadása kötelező.</mat-error>
-        }
-      }
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Végzési év</mat-label>
-      <mat-select formControlName="finishingYear">
-        @for (year of finishingYears; track $index) {
-          <mat-option [value]="year">{{ year }}</mat-option>
-        }
-      </mat-select>
-      @if (this.form.get('finishingYear')?.errors && form.get('finishingYear')?.touched) {
-        @if (this.form.get('finishingYear')?.errors?.['required']) {
-          <mat-error>Az végzési év megadása kötelező.</mat-error>
-        }
-      }
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>Iskola</mat-label>
-      <mat-select formControlName="schoolId">
-        @for (school of schools; track school.id) {
-          <mat-option [value]="school.id">{{ school.name }}</mat-option>
-        }
-      </mat-select>
-      @if (this.form.get('schoolId')?.errors && form.get('schoolId')?.touched) {
-        @if (this.form.get('schoolId')?.errors?.['required']) {
-          <mat-error>Az iskola megadása kötelező.</mat-error>
-        }
-      }
-    </mat-form-field>
-  </mat-dialog-content>
-  <mat-dialog-actions>
-    <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
-    <button matButton (click)="handleSave()">Mentés</button>
-  </mat-dialog-actions>
-</form>
+<mat-dialog-content>
+  <app-shared-form [(fields)]="fields" (validSubmit)="this.handleSave($event)" #form/>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
+  <button matButton (click)="form.handleSubmit()">Mentés</button>
+</mat-dialog-actions>

@@ -28,7 +28,7 @@
             </td>
           } @else {
             <td mat-cell
-                *matCellDef="let element"> {{ (col.valueFn ? col.valueFn(element) : element[col.field]) ?? 'N/A' }}
+                *matCellDef="let element"> {{ (col.valueFn ? col.valueFn(element) : element[col.field]) ?? 'Nincs adat' }}
             </td>
           }
         }

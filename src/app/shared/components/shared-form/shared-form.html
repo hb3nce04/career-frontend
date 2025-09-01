@@ -1,0 +1,48 @@
+<form [formGroup]="form" (ngSubmit)="handleSubmit()">
+  @for (field of fields(); track $index) {
+    @if (field.type === 'toggle') {
+      <mat-slide-toggle [formControlName]="field.name">
+        {{ typeof field.label === 'function' ? field.label(this.form.value[field.name]) : field.label }}
+      </mat-slide-toggle>
+    } @else if (field.type === 'checkbox') {
+      <mat-checkbox [formControlName]="field.name">{{ field.label }}</mat-checkbox>
+    } @else {
+      <mat-form-field appearance="outline">
+        <mat-label>{{ field.label }}</mat-label>
+        @if (field.type === 'text' || field.type === 'numeric' || field.type == 'password') {
+          <input matInput [type]="field.type" [formControlName]="field.name">
+        } @else if (field.type == 'select') {
+          <mat-select [formControlName]="field.name">
+            @if (field.groups) {
+              @for (group of field.groups; track $index) {
+                <mat-optgroup [label]="group.label">
+                  @for (option of group.options; track $index) {
+                    <mat-option [value]="option.value">{{ option.label }}</mat-option>
+                  }
+                </mat-optgroup>
+              }
+            } @else {
+              @for (option of field.options; track $index) {
+                <mat-option [value]="option.value">{{ option.label }}</mat-option>
+              }
+            }
+          </mat-select>
+
+        } @else if (field.type == 'textarea') {
+          <textarea matInput [formControlName]="field.name"></textarea>
+          @if (field.hint) {
+            <ng-container>
+              <mat-hint>{{ field.hint }}</mat-hint>
+            </ng-container>
+          }
+        }
+        <ng-container>
+          @for (error of errorKeys(field.name); track $index) {
+            <mat-error>{{ messageFor(field.name, error) }}</mat-error>
+          }
+        </ng-container>
+      </mat-form-field>
+    }
+    <ng-content select="[submit-button]"></ng-content>
+  }
+</form>

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {Footer} from '../components/footer/footer';
+import {Footer} from '../components/layout/footer/footer';
 import {MatProgressBar} from '@angular/material/progress-bar';
 import {LoadingService} from '../../core/services/loading.service';
 

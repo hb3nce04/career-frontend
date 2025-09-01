@@ -1,43 +1,10 @@
 <h1>Profil</h1>
 <div>OM azonosító: <span>{{ this.authService.getId() }}</span></div>
 <div>Jogosultság: <span>{{ this.authService.getRole() }}</span></div>
-<form [formGroup]="profileForm">
-  <mat-form-field appearance="outline">
-    <input matInput type="password" formControlName="oldPassword" placeholder="Régi jelszó">
-    @if (this.profileForm.get('oldPassword')?.errors && profileForm.get('oldPassword')?.touched) {
-      @if (this.profileForm.get('oldPassword')?.errors?.['required']) {
-        <mat-error>Régi jelszó megadása kötelező</mat-error>
-      } @else if (this.profileForm.get('oldPassword')?.errors?.['pattern']) {
-        <mat-error>Hibás formátum</mat-error>
-      }
-    }
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <input matInput type="password" formControlName="newPassword" placeholder="Új jelszó">
-    @if (this.profileForm.get('newPassword')?.errors && profileForm.get('newPassword')?.touched) {
-      @if (this.profileForm.get('newPassword')?.errors?.['required']) {
-        <mat-error>Régi jelszó megadása kötelező</mat-error>
-      } @else if (this.profileForm.get('newPassword')?.errors?.['pattern']) {
-        <mat-error>Hibás formátum</mat-error>
-      } @else if (this.profileForm.get('newPassword')?.errors?.['passwordMatch']) {
-        <mat-error>Az új jelszó nem egyezhet meg a régivel.</mat-error>
-      }
-    }
-  </mat-form-field>
-
-  <mat-form-field appearance="outline">
-    <input matInput type="password" formControlName="newPasswordAgain" placeholder="Új jelszó mégegyszer">
-    @if (this.profileForm.get('newPasswordAgain')?.errors && profileForm.get('newPasswordAgain')?.touched) {
-      @if (this.profileForm.get('newPasswordAgain')?.errors?.['required']) {
-        <mat-error>Régi jelszó megadása kötelező</mat-error>
-      } @else if (this.profileForm.get('newPasswordAgain')?.errors?.['passwordMismatch']) {
-        <mat-error>A két jelszó nem egyezik.</mat-error>
-      }
-    }
-  </mat-form-field>
-
-  <button matButton="filled" (click)="handleUpdateProfile()" [disabled]="this.loadingService.loadingSubject.value">
-    Módosítások mentése
-  </button>
-</form>
+<div class="form-container">
+  <app-shared-form [(fields)]="fields" [customValidators]="customValidators" (validSubmit)="handleUpdateProfile($event)">
+    <button submit-button matButton="filled" [disabled]="this.loadingService.loadingSubject.value">
+      Módosítások mentése
+    </button>
+  </app-shared-form>
+</div>

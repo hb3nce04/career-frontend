@@ -4,10 +4,10 @@ import {MatButton, MatIconButton} from '@angular/material/button';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuItem, MatMenuTrigger} from '@angular/material/menu';
 import {Router, RouterLink} from '@angular/router';
-import {AuthService} from '../../../core/services/auth.service';
-import {NAV_LINKS} from '../../../core/constants/nav-link.constant';
-import {ThemeService} from '../../../core/services/theme.service';
-import {NotificationService} from '../../../core/services/notification.service';
+import {AuthService} from '../../../../core/services/auth.service';
+import {NAV_LINKS} from '../../../../core/constants/nav-link.constant';
+import {ThemeService} from '../../../../core/services/theme.service';
+import {NotificationService} from '../../../../core/services/notification.service';
 
 export interface NavLink {
   label: string;

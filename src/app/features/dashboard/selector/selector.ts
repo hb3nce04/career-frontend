@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ClassService} from './class.service';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
 import {ClassDto} from '../../../shared/dtos/class.dto';
@@ -18,6 +18,7 @@ import {CreateClassDialog} from './create/create';
 import {MatDialog} from '@angular/material/dialog';
 import {DeleteClassDialog} from './delete/delete';
 import {EditClassDialog} from './edit/edit';
+import {SchoolService} from './school.service';
 
 @Component({
   selector: 'app-selector',
@@ -36,15 +37,11 @@ import {EditClassDialog} from './edit/edit';
 })
 export class Selector implements OnInit {
   protected classService = inject(ClassService);
+  protected schoolService = inject(SchoolService);
   protected classSelectorService = inject(ClassSelectorService);
   protected notificationService = inject(NotificationService);
   protected router = inject(Router);
   protected dialog = inject(MatDialog);
-  protected newClass: WritableSignal<{
-    name: string;
-    finishingYear: number;
-    schoolId: number
-  } | null> = signal(null);
 
   classes: ClassDto[] = [];
 
@@ -77,18 +74,6 @@ export class Selector implements OnInit {
     )
   }
 
-  handleClassCreate() {
-    this.dialog.open(CreateClassDialog, {
-      data: {
-        class: this.newClass()
-      }
-    }).afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        this.loadClasses();
-      }
-    })
-  }
-
   handleClassDelete(schoolClass: ClassDto) {
     this.dialog.open(DeleteClassDialog, {
       data: {
@@ -101,14 +86,35 @@ export class Selector implements OnInit {
     })
   }
 
-  handleClassEdit(schoolClass: ClassDto) {
-    this.dialog.open(EditClassDialog, {
-      data: {
-        class: schoolClass
+  handleClassCreate() {
+    this.schoolService.getAll().subscribe({
+      next: (data) => {
+        this.dialog.open(CreateClassDialog, {
+          data: {
+            schools: data,
+          }
+        }).afterClosed().subscribe((result: boolean) => {
+          if (result) {
+            this.loadClasses();
+          }
+        })
       }
-    }).afterClosed().subscribe((result: boolean) => {
-      if (result) {
-        this.loadClasses();
+    })
+  }
+
+  handleClassEdit(schoolClass: ClassDto) {
+    this.schoolService.getAll().subscribe({
+      next: (data) => {
+        this.dialog.open(EditClassDialog, {
+          data: {
+            class: schoolClass,
+            schools: data
+          }
+        }).afterClosed().subscribe((result: boolean) => {
+          if (result) {
+            this.loadClasses();
+          }
+        })
       }
     })
   }

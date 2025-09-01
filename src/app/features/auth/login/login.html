@@ -1,31 +1,8 @@
 <div class="login-container">
   <h3>Kérlek jelentkezz be,</h3>
-  <form [formGroup]="loginForm">
-    <mat-form-field appearance="outline">
-      <mat-label>OM azonosító</mat-label>
-      <input matInput type="numeric" formControlName="id" autofocus>
-      @if (this.loginForm.get('id')?.errors && loginForm.get('id')?.touched) {
-        @if (this.loginForm.get('id')?.errors?.['required']) {
-          <mat-error>OM azonosító megadása kötelező</mat-error>
-        } @else if (this.loginForm.get('id')?.errors?.['pattern']) {
-          <mat-error>Hibás formátum</mat-error>
-        }
-      }
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Jelszó</mat-label>
-      <input matInput type="password" formControlName="password">
-      @if (this.loginForm.get('password')?.errors && loginForm.get('password')?.touched) {
-        @if (this.loginForm.get('password')?.errors?.['required']) {
-          <mat-error>Jelszó megadása kötelező</mat-error>
-        } @else if (this.loginForm.get('password')?.errors?.['pattern']) {
-          <mat-error>Hibás formátum</mat-error>
-        }
-      }
-    </mat-form-field>
-
-    <button matButton="filled" (click)="handleLogin()" [disabled]="this.loadingService.loadingSubject.value">Bejelentkezés</button>
-  </form>
-
+  <app-shared-form [fields]="this.fields" (validSubmit)="handleLogin($event)">
+    <button submit-button matButton="filled" [disabled]="this.loadingService.loadingSubject.value">
+      Bejelentkezés
+    </button>
+  </app-shared-form>
 </div>

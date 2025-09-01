@@ -1,9 +1,9 @@
 <h1 mat-dialog-title>Biztosan törölni szeretnéd az alábbi tanulót?</h1>
 <mat-dialog-content>
-  <div>OM azonosító: <span>{{ this.data.student.id ?? 'N/A'  }}</span></div>
-  <div>Név: <span>{{ this.data.student.name ?? 'N/A'  }}</span></div>
-  <div>Ágazat: <span>{{ this.data.student.Sector?.name ?? 'N/A' }}</span></div>
-  <div>Szakma: <span>{{ this.data.student.Profession?.name ?? 'N/A' }}</span></div>
+  <div>OM azonosító: <span>{{ this.data.student.id ?? 'Nincs'  }}</span></div>
+  <div>Név: <span>{{ this.data.student.name ?? 'Nincs'  }}</span></div>
+  <div>Ágazat: <span>{{ this.data.student.Sector?.name ?? 'Nincs' }}</span></div>
+  <div>Szakma: <span>{{ this.data.student.Profession?.name ?? 'Nincs' }}</span></div>
   <div>Munkarend: <span>{{this.data.student.day_shift ? 'Nappali' : 'Esti'}}</span></div>
 </mat-dialog-content>
 <mat-dialog-actions>

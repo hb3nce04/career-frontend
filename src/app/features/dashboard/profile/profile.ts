@@ -1,13 +1,12 @@
 import {Component, inject} from '@angular/core';
 import {AuthService} from '../../../core/services/auth.service';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
-import {MatError, MatFormField} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
 import {LoadingService} from '../../../core/services/loading.service';
 import {UserService} from '../../../core/services/user.service';
 import {NotificationService} from '../../../core/services/notification.service';
-import {passwordMatchValidator, passwordNotMatchValidator} from '../../../shared/validators/password.validator';
+import {FieldConfig, SharedForm} from '../../../shared/components/shared-form/shared-form';
+import {CustomValidators} from '../../../shared/validators/custom.validator';
 
 @Component({
   selector: 'app-profile',
@@ -16,10 +15,8 @@ import {passwordMatchValidator, passwordNotMatchValidator} from '../../../shared
   imports: [
     FormsModule,
     MatButton,
-    MatError,
-    MatFormField,
-    MatInput,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedForm
   ]
 })
 export class Profile {
@@ -28,26 +25,50 @@ export class Profile {
   protected userService: UserService = inject(UserService);
   private notificationService: NotificationService = inject(NotificationService);
 
-  profileForm = new FormGroup({
-    oldPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
-    newPassword: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
-    newPasswordAgain: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
-  }, {
-    validators: [passwordMatchValidator('newPassword', 'newPasswordAgain'), passwordNotMatchValidator('oldPassword', 'newPassword')]
-  });
+  customValidators: ValidatorFn[] = [
+    CustomValidators.match('newPassword', 'newPasswordAgain'),
+    CustomValidators.notMatch('oldPassword', 'newPassword'),
+  ];
 
-  handleUpdateProfile() {
-    if (this.profileForm.valid) {
-      const {oldPassword, newPassword} = this.profileForm.value;
-      this.userService.updatePassword(oldPassword!, newPassword!).subscribe({
+  fields: FieldConfig[] = [
+    {
+      name: 'oldPassword',
+      label: 'Régi jelszó',
+      type: 'password',
+      autofocus: true,
+      validators: [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]
+    },
+    {
+      name: 'newPassword',
+      label: 'Új jelszó',
+      type: 'password',
+      validators: [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')],
+      customValidationMessages : {
+        notMatch: 'A jelszavaknak különbözőnek kell lenniük'
+      }
+    },
+    {
+      name: 'newPasswordAgain',
+      label: 'Új jelszó mégegyszer',
+      type: 'password',
+      validators: [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')],
+      customValidationMessages: {
+        match: 'A két jelszó nem egyezik'
+      }
+    },
+  ]
+
+  handleUpdateProfile(value: any) {
+    const {oldPassword, newPassword} = value;
+    this.userService.updatePassword(oldPassword!, newPassword!).subscribe({
         next: result => {
           this.notificationService.open(result.message)
         },
         error: response => {
           const error = response.error;
           this.notificationService.open(error.message ?? 'Hiba történt a jelszó frissítése során!')
-        }}
-      )
-    }
+        }
+      }
+    )
   }
 }

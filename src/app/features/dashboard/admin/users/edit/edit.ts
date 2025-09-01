@@ -7,13 +7,11 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {MatError, MatFormField, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {UserService} from '../../../../../core/services/user.service';
 import {NotificationService} from '../../../../../core/services/notification.service';
-import {MatSlideToggle} from '@angular/material/slide-toggle';
+import {FieldConfig, SharedForm} from '../../../../../shared/components/shared-form/shared-form';
 
 @Component({
   selector: 'app-edit-user-dialog',
@@ -23,15 +21,11 @@ import {MatSlideToggle} from '@angular/material/slide-toggle';
     MatDialogModule,
     MatDialogTitle,
     MatDialogContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatDialogActions,
     FormsModule,
     MatButton,
     ReactiveFormsModule,
-    MatError,
-    MatSlideToggle
+    SharedForm
   ]
 })
 export class EditUserDialog {
@@ -40,16 +34,32 @@ export class EditUserDialog {
   protected userService = inject(UserService);
   protected notificationService = inject(NotificationService);
 
-  form = new FormGroup({
-    id: new FormControl(this.data.user.id, [Validators.required, Validators.pattern('^[0-9]{11}$')]),
-    password: new FormControl('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')]),
-    isAdmin: new FormControl(this.data.user.is_admin)
-  });
+  fields: FieldConfig[] = [
+    {
+      name: 'id',
+      label: 'OM azonosító',
+      type: 'numeric',
+      value: this.data.user.id,
+      autofocus: true,
+      validators: [Validators.required, Validators.pattern('^[0-9]{11}$')],
+    },
+    {
+      name: 'password',
+      label: 'Jelszó',
+      type: 'password',
+      validators: [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*_-]).{8,24}$')],
+    },
+    {
+      name: 'isAdmin',
+      label: (val) => val ? "Admin" : "Felhasználó",
+      type: 'toggle',
+      value: this.data.user.is_admin,
+    }
+  ];
 
   // TODO:
-  handleSave() {
-   if (this.form.valid) {
-   }
+  handleSave(values: any) {
+
   }
 
   handleClose() {

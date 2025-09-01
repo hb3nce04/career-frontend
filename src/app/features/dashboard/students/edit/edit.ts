@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -7,15 +7,15 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {MatError, MatFormField, MatHint, MatLabel} from '@angular/material/form-field';
-import {MatInput} from '@angular/material/input';
-import {FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../../core/services/notification.service';
-import {MatOptgroup, MatOption, MatSelect} from '@angular/material/select';
-import {MatCheckbox} from '@angular/material/checkbox';
 import {StudentService} from '../student.service';
 import {ClassSelectorService} from '../../../../core/services/class-selector.service';
+import {FieldConfig, SharedForm} from '../../../../shared/components/shared-form/shared-form';
+import {CategoryDto} from '../../../../shared/dtos/category.dto';
+import {ProfessionDto} from '../../../../shared/dtos/profession.dto';
+import {SectorDto} from '../../../../shared/dtos/sector.dto';
 
 @Component({
   selector: 'app-edit-student-dialog',
@@ -25,19 +25,11 @@ import {ClassSelectorService} from '../../../../core/services/class-selector.ser
     MatDialogModule,
     MatDialogTitle,
     MatDialogContent,
-    MatFormField,
-    MatLabel,
-    MatInput,
     MatDialogActions,
     FormsModule,
     MatButton,
     ReactiveFormsModule,
-    MatError,
-    MatOption,
-    MatSelect,
-    MatHint,
-    MatCheckbox,
-    MatOptgroup
+    SharedForm
   ]
 })
 export class EditStudentDialog {
@@ -47,29 +39,81 @@ export class EditStudentDialog {
   protected notificationService = inject(NotificationService);
   protected classSelector = inject(ClassSelectorService);
 
-  form = new FormGroup({
-    id: new FormControl(this.data.student.id, [Validators.required, Validators.pattern('^[0-9]{11}$')]),
-    name: new FormControl(this.data.student.name, [Validators.required, Validators.pattern('^[^\\d\'"`\\\\]{2,100}$')]),
-    professionOrSectorId: new FormControl(this.data.student.professionOrSectorId, [Validators.required]),
-    categoryId: new FormControl(this.data.student.Field?.category_id),
-    description: new FormControl(this.data.student.Field?.description, [ Validators.minLength(5), Validators.maxLength(255)]),
-    isDayShift: new FormControl(this.data.student.day_shift, [Validators.required]),
-  });
+  fields: WritableSignal<FieldConfig[]> = signal([
+    {
+      name: 'id',
+      label: 'OM azonosító',
+      type: 'numeric',
+      value: this.data.student.id,
+      autofocus: true,
+      validators: [Validators.required, Validators.pattern('^[0-9]{11}$')],
+    },
+    {
+      name: 'name',
+      label: 'Tanuló neve',
+      type: 'text',
+      value: this.data.student.name,
+    },
+    {
+      name: 'professionOrSectorId',
+      label: 'Szakma / ágazat',
+      type: 'select',
+      value: this.data.student.professionOrSectorId,
+      validators: [Validators.required],
+      groups: [
+        {
+          label: 'Szakma',
+          options: this.data.professions.map((profession: ProfessionDto) => {
+            return {value: profession.id+"p", label: `${profession.name} - ${profession.number}`};
+          })
+        },
+        {
+          label: 'Ágazat',
+          options: this.data.sectors.map((sector: SectorDto) => {
+            return {value: sector.id+"s", label: `${sector.name} - ${sector.number}`};
+          })
+        }
+      ]
+    },
+    {
+      name: 'categoryId',
+      label: 'Pálya kategóriája',
+      type: 'select',
+      value: this.data.student.Field.id,
+      validators: [Validators.required],
+      options: this.data.categories.map((category: CategoryDto) => {
+        return {value: category.id, label: category.name};
+      })
+    },
+    {
+      name: 'description',
+      label: 'Pálya leírása',
+      type: 'textarea',
+      value: this.data.student.Field.description,
+      validators: [Validators.required],
+      options: []
+    },
+    {
+      name: 'isDayShift',
+      label: 'Nappali munkarend',
+      type: 'checkbox',
+      value: this.data.student.day_shift,
+    }
+  ]);
 
-  handleSave() {
-   if (this.form.valid) {
-     const {id, name, professionOrSectorId, categoryId, description, isDayShift} = this.form.value;
-     this.studentService.update(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
-       next: result => {
-         this.notificationService.open(result.message)
-         this.dialogRef.close(true);
-       },
-       error: response => {
-         const error = response.error;
-         this.notificationService.open(error.message ?? 'Hiba történt a tanuló módosítása során!')
-       }}
-     )
-   }
+  handleSave(values: any) {
+    const {id, name, professionOrSectorId, categoryId, description, isDayShift} = values;
+    this.studentService.update(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
+        next: result => {
+          this.notificationService.open(result.message)
+          this.dialogRef.close(true);
+        },
+        error: response => {
+          const error = response.error;
+          this.notificationService.open(error.message ?? 'Hiba történt a tanuló módosítása során!')
+        }
+      }
+    )
   }
 
   handleClose() {
