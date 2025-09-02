@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ENVIRONMENT} from '../../../../../environments/ENVIRONMENT';
+import {ENVIRONMENT} from '../../../../../environments/environment';
 import {ClassModel, ClassStatisticsDto} from '../../../../shared/models/class.model';
 import {BaseResponseDto} from '../../../../core/dto/base-response.dto';
 

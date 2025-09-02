@@ -1,6 +1,6 @@
 import {Component, inject, signal, WritableSignal} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogModule, MatDialogRef} from '@angular/material/dialog';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ClassService} from '../../services/class.service';
 import {NotificationService} from '../../../../../core/services/notification.service';
 import {MatButton} from '@angular/material/button';
@@ -65,19 +65,21 @@ export class EditClassDialog {
     },
   ]);
 
-  handleSave(values: any) {
-    const {name, finishingYear, schoolId} = values;
-    this.classService.update(this.data.class.id, name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
-        next: result => {
-          this.notificationService.open(result.message)
-          this.dialogRef.close(true);
-        },
-        error: response => {
-          const error = response.error;
-          this.notificationService.open(error.message ?? 'Hiba történt az osztály módosítása során!')
+  handleSave(form: FormGroup) {
+    if (form.dirty) {
+      const {name, finishingYear, schoolId} = form.value;
+      this.classService.update(this.data.class.id, name!, parseInt(finishingYear!), parseInt(schoolId!)).subscribe({
+          next: result => {
+            this.notificationService.open(result.message)
+            this.dialogRef.close(true);
+          },
+          error: response => {
+            const error = response.error;
+            this.notificationService.open(error.message ?? 'Hiba történt az osztály módosítása során!')
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   handleClose() {

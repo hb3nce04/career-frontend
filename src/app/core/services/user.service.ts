@@ -1,7 +1,7 @@
 import {Observable} from 'rxjs';
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ENVIRONMENT} from '../../../environments/ENVIRONMENT';
+import {ENVIRONMENT} from '../../../environments/environment';
 import {AuthService} from './auth.service';
 import {BaseResponseDto} from '../dto/base-response.dto';
 import {UserModel} from '../../shared/models/user.model';

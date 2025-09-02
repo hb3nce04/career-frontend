@@ -1,8 +1,8 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ENVIRONMENT} from '../../../../../environments/ENVIRONMENT';
 import {Observable} from 'rxjs';
 import {ProfessionModel} from '../../../../shared/models/profession.model';
+import {ENVIRONMENT} from '../../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class ProfessionService {

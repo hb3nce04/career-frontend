@@ -64,9 +64,10 @@ export class ExportDataDialog {
 
   handleSave(values: any) {
     const {name, withTimestamps} = values;
-    this.exportData(name, withTimestamps, this.data.columns, this.data.data);
-    this.notificationService.open("Adatok sikeresen exportálva!")
-    this.dialogRef.close(true);
+    const result = this.exportData(name, withTimestamps, this.data.columns, this.data.data);
+    if (result) {
+      this.dialogRef.close(true);
+    }
   }
 
   handleClose() {
@@ -74,24 +75,31 @@ export class ExportDataDialog {
   }
 
   exportData(filename: string, withTimestamps: boolean, columns: TableColumn[], data: any) {
-    const rows = [];
+    if (data.length > 0) {
+      const rows = [];
 
-    const values = columns.map((col: TableColumn) => {
-      return `${col.header}`
-    })
-    rows.push(values.join(';'));
-    data.forEach((row: any) => {
       const values = columns.map((col: TableColumn) => {
-        return (col.valueFn ? col.valueFn(row) : row[col.field]) ?? 'N/A';
-      });
+        return `${col.header}`
+      })
       rows.push(values.join(';'));
-    });
+      data.forEach((row: any) => {
+        const values = columns.map((col: TableColumn) => {
+          return (col.valueFn ? col.valueFn(row) : row[col.field]) ?? 'N/A';
+        });
+        rows.push(values.join(';'));
+      });
 
-    const csvString = rows.join('\n');
-    console.log(csvString)
-    const blob = new Blob([csvString], { type: 'text/csv' });
-    const now = new Date();
-    const timestamp = now.toISOString().replace(/[:.TZ]/g, '-').slice(0, -5);
-    saveAs(blob, `${filename + (withTimestamps ? '-'+timestamp : '')}.csv`);
+      const csvString = rows.join('\n');
+      console.log(csvString)
+      const blob = new Blob([csvString], { type: 'text/csv' });
+      const now = new Date();
+      const timestamp = now.toISOString().replace(/[:.TZ]/g, '-').slice(0, -5);
+      saveAs(blob, `${filename + (withTimestamps ? '-'+timestamp : '')}.csv`);
+      this.notificationService.open("Adatok sikeresen exportálva!")
+      return true;
+    } else {
+      this.notificationService.open("Az exportálásra kijelölt adathalmaz üres!")
+      return false;
+    }
   }
 }

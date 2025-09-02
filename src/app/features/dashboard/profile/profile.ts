@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {AuthService} from '../../../core/services/auth.service';
-import {FormsModule, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, ValidatorFn, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {LoadingService} from '../../../core/services/loading.service';
 import {UserService} from '../../../core/services/user.service';
@@ -60,8 +60,8 @@ export class Profile {
     },
   ]
 
-  handleUpdateProfile(value: any) {
-    const {oldPassword, newPassword} = value;
+  handleUpdateProfile(form: FormGroup) {
+    const {oldPassword, newPassword} = form.value;
     this.userService.updatePassword(oldPassword!, newPassword!).subscribe({
         next: result => {
           this.notificationService.open(result.message)

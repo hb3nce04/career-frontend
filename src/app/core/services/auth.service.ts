@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ENVIRONMENT} from '../../../environments/ENVIRONMENT';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {BaseResponseDto} from '../dto/base-response.dto';
 import {UserModel} from '../../shared/models/user.model';
+import {ENVIRONMENT} from '../../../environments/environment';
 
 interface LoginResponse extends BaseResponseDto {
   user: UserModel;

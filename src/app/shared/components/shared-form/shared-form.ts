@@ -1,4 +1,15 @@
-import {Component, ContentChild, inject, input, InputSignal, model, ModelSignal, OnInit, output} from '@angular/core';
+import {
+  Component,
+  ContentChild,
+  inject,
+  input,
+  InputSignal,
+  model,
+  ModelSignal,
+  OnInit,
+  output,
+  OutputEmitterRef
+} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, ValidatorFn} from '@angular/forms';
 import {MatError, MatFormField, MatHint} from '@angular/material/form-field';
 import {MatInput, MatLabel} from '@angular/material/input';
@@ -63,7 +74,7 @@ export class SharedForm implements OnInit {
   private formBuilder: FormBuilder = inject(FormBuilder);
 
   fields: ModelSignal<FieldConfig[]> = model.required();
-  validSubmit = output()
+  validSubmit: OutputEmitterRef<FormGroup> = output()
 
   customValidators: InputSignal<ValidatorFn | ValidatorFn[] | null | undefined> = input();
 
@@ -99,7 +110,7 @@ export class SharedForm implements OnInit {
 
   handleSubmit() {
     if (this.form.valid) {
-      this.validSubmit.emit(this.form.value);
+      this.validSubmit.emit(this.form);
     } else {
       this.form.markAsTouched();
     }

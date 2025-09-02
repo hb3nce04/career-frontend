@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../../core/services/auth.service';
 import {LoadingService} from '../../../core/services/loading.service';
 import {NotificationService} from '../../../core/services/notification.service';
@@ -69,8 +69,8 @@ export class Login {
     }
   ]
 
-  handleLogin(values: any) {
-    const {id, password} = values;
+  handleLogin(form: FormGroup) {
+    const {id, password} = form.value;
     this.authService.login(id, password).subscribe({
       next: response => {
         this.notificationService.open(response.message)

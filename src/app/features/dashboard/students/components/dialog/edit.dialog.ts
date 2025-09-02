@@ -1,4 +1,4 @@
-import {Component, inject, signal, WritableSignal} from '@angular/core';
+import {Component, ElementRef, inject, signal, ViewChild, WritableSignal} from '@angular/core';
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../../../core/services/notification.service';
 import {StudentService} from '../../services/student.service';
@@ -46,6 +46,8 @@ export class EditStudentDialog {
   protected studentService = inject(StudentService);
   protected notificationService = inject(NotificationService);
   protected classSelector = inject(ClassSelectorService);
+
+  @ViewChild('form') form!: ElementRef<HTMLInputElement>;
 
   fields: WritableSignal<FieldConfig[]> = signal([
     {
@@ -87,7 +89,7 @@ export class EditStudentDialog {
       name: 'categoryId',
       label: 'Pálya kategóriája',
       type: 'select',
-      value: this.data.student.Field.id,
+      value: this.data.student.Field?.id,
       validators: [Validators.required],
       options: this.data.categories.map((category: CategoryModel) => {
         return {value: category.id, label: category.name};
@@ -97,7 +99,7 @@ export class EditStudentDialog {
       name: 'description',
       label: 'Pálya leírása',
       type: 'textarea',
-      value: this.data.student.Field.description,
+      value: this.data.student.Field?.description,
       validators: [Validators.required],
       hint: 'A pálya leírása maximum 255 karakter hosszú lehet.'
     },
@@ -109,19 +111,21 @@ export class EditStudentDialog {
     }
   ]);
 
-  handleSave(values: any) {
-    const {id, name, professionOrSectorId, categoryId, description, isDayShift} = values;
-    this.studentService.update(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
-        next: result => {
-          this.notificationService.open(result.message)
-          this.dialogRef.close(true);
-        },
-        error: response => {
-          const error = response.error;
-          this.notificationService.open(error.message ?? 'Hiba történt a tanuló módosítása során!')
+  handleSave(form: FormGroup) {
+    if (form.dirty) {
+      const {id, name, professionOrSectorId, categoryId, description, isDayShift} = form.value;
+      this.studentService.update(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
+          next: result => {
+            this.notificationService.open(result.message)
+            this.dialogRef.close(true);
+          },
+          error: response => {
+            const error = response.error;
+            this.notificationService.open(error.message ?? 'Hiba történt a tanuló módosítása során!')
+          }
         }
-      }
-    )
+      )
+    }
   }
 
   handleClose() {

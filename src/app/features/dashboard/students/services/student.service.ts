@@ -1,9 +1,9 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ENVIRONMENT} from '../../../../../environments/ENVIRONMENT';
 import {Observable} from 'rxjs';
 import {StudentModel} from '../../../../shared/models/student.model';
 import {BaseResponseDto} from '../../../../core/dto/base-response.dto';
+import {ENVIRONMENT} from '../../../../../environments/environment';
 
 @Injectable({providedIn: 'root'})
 export class StudentService {

@@ -6,7 +6,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {UserService} from '../../../../../core/services/user.service';
 import {NotificationService} from '../../../../../core/services/notification.service';
@@ -61,8 +61,8 @@ export class CreateUserDialog {
     }
   ];
 
-  handleSave(values: any) {
-    const {id, password, isAdmin} = values;
+  handleSave(form: FormGroup) {
+    const {id, password, isAdmin} = form.value;
     // @ts-ignore
     this.userService.create(password!, {id, isAdmin}).subscribe({
         next: result => {

@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../../../core/services/notification.service';
 import {StudentService} from '../../services/student.service';
@@ -103,8 +103,8 @@ export class CreateStudentDialog {
     }
   ]);
 
-  handleSave(values: any) {
-    const {id, name, professionOrSectorId, categoryId, description, isDayShift} = values;
+  handleSave(form: FormGroup) {
+    const {id, name, professionOrSectorId, categoryId, description, isDayShift} = form.value;
     this.studentService.create(this.classSelector.selectedClassSubject.value!.id, parseInt(id!), name!, professionOrSectorId!, parseInt(categoryId!), description!, !!isDayShift).subscribe({
         next: result => {
           this.notificationService.open(result.message)
