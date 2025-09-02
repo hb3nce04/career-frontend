@@ -51,8 +51,6 @@ export interface TableColumn {
   hideFromExport?: boolean;
 }
 
-export interface TableRow {}
-
 @Component({
   selector: 'app-shared-table',
   templateUrl: './shared-table.html',

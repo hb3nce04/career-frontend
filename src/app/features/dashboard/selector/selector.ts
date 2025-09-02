@@ -1,7 +1,7 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ClassService} from './class.service';
+import {ClassService} from './services/class.service';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
-import {ClassDto} from '../../../shared/dtos/class.dto';
+import {ClassModel} from '../../../shared/models/class.model';
 import {
   MatCard,
   MatCardActions,
@@ -14,11 +14,11 @@ import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../core/services/notification.service';
 import {Router} from '@angular/router';
 import {AsyncPipe} from '@angular/common';
-import {CreateClassDialog} from './create/create';
+import {CreateClassDialog} from './components/dialog/create.dialog';
 import {MatDialog} from '@angular/material/dialog';
-import {DeleteClassDialog} from './delete/delete';
-import {EditClassDialog} from './edit/edit';
-import {SchoolService} from './school.service';
+import {DeleteClassDialog} from './components/dialog/delete.dialog';
+import {EditClassDialog} from './components/dialog/edit.dialog';
+import {SchoolService} from './services/school.service';
 
 @Component({
   selector: 'app-selector',
@@ -43,7 +43,7 @@ export class Selector implements OnInit {
   protected router = inject(Router);
   protected dialog = inject(MatDialog);
 
-  classes: ClassDto[] = [];
+  classes: ClassModel[] = [];
 
   ngOnInit(): void {
     this.loadClasses();
@@ -55,7 +55,7 @@ export class Selector implements OnInit {
     });
   }
 
-  handleClassSelection(schoolClass: ClassDto) {
+  handleClassSelection(schoolClass: ClassModel) {
     this.classSelectorService.select(schoolClass).subscribe({
         next: () => {
           this.notificationService.open("Az osztály sikeresen kiválasztásra került!")
@@ -74,7 +74,7 @@ export class Selector implements OnInit {
     )
   }
 
-  handleClassDelete(schoolClass: ClassDto) {
+  handleClassDelete(schoolClass: ClassModel) {
     this.dialog.open(DeleteClassDialog, {
       data: {
         class: schoolClass
@@ -102,7 +102,7 @@ export class Selector implements OnInit {
     })
   }
 
-  handleClassEdit(schoolClass: ClassDto) {
+  handleClassEdit(schoolClass: ClassModel) {
     this.schoolService.getAll().subscribe({
       next: (data) => {
         this.dialog.open(EditClassDialog, {

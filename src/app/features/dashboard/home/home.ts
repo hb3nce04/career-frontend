@@ -3,7 +3,7 @@ import {ClassSelectorService} from '../../../core/services/class-selector.servic
 import {RouterLink} from '@angular/router';
 import {MatButton} from '@angular/material/button';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from '@angular/material/card';
-import {ClassService} from '../selector/class.service';
+import {ClassService} from '../selector/services/class.service';
 
 @Component({
   selector: 'app-home',

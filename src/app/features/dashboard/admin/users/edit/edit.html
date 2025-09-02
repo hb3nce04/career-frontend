@@ -1,8 +1,0 @@
-<h1 mat-dialog-title>Felhasználó Módosítása</h1>
-<mat-dialog-content>
-  <app-shared-form [(fields)]="fields" (validSubmit)="handleSave($event)" #form/>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
-  <button matButton (click)="form.handleSubmit()">Mentés</button>
-</mat-dialog-actions>

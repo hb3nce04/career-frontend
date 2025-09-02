@@ -39,7 +39,12 @@ export const ValidationMessages: Record<string, string> = {
 @Component({
   selector: 'app-shared-form',
   templateUrl: './shared-form.html',
-  styleUrl: './shared-form.scss',
+  styles: `
+    form {
+      display: flex;
+      flex-direction: column;
+    }
+  `,
   imports: [
     ReactiveFormsModule,
     MatError,

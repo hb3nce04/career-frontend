@@ -1,8 +1,0 @@
-<h1 mat-dialog-title>Osztály létrehozása</h1>
-<mat-dialog-content>
-  <app-shared-form [(fields)]="fields" (validSubmit)="this.handleSave($event)" #form/>
-</mat-dialog-content>
-<mat-dialog-actions>
-  <button matButton (click)="handleClose()" cdkFocusInitial>Mégsem</button>
-  <button matButton (click)="form.handleSubmit()">Létrehozás</button>
-</mat-dialog-actions>

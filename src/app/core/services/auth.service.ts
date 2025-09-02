@@ -1,20 +1,20 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+import {ENVIRONMENT} from '../../../environments/ENVIRONMENT';
 import {BehaviorSubject, Observable, tap} from 'rxjs';
-import {UserDto} from '../../shared/dtos/user.dto';
 import {BaseResponseDto} from '../dto/base-response.dto';
+import {UserModel} from '../../shared/models/user.model';
 
 interface LoginResponse extends BaseResponseDto {
-  user: UserDto;
+  user: UserModel;
 }
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
   private http: HttpClient = inject(HttpClient);
-  private apiUrl: string = environment.apiUrl + "/auth";
+  private apiUrl: string = ENVIRONMENT.API_URL + "/auth";
 
-  private userSubject = new BehaviorSubject<UserDto | null>(null);
+  private userSubject = new BehaviorSubject<UserModel | null>(null);
 
   login(id: string | null | undefined, password: string | null | undefined) {
     return this.http.post<LoginResponse>(this.apiUrl + "/login", {id, password}, {withCredentials: true}).pipe(
@@ -32,8 +32,8 @@ export class AuthService {
     )
   }
 
-  getProfile(): Observable<UserDto> {
-    return this.http.get<UserDto>(this.apiUrl + '/profile', {withCredentials: true}).pipe(
+  getProfile(): Observable<UserModel> {
+    return this.http.get<UserModel>(this.apiUrl + '/profile', {withCredentials: true}).pipe(
       tap(user => this.userSubject.next(user)),
     );
   }

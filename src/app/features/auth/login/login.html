@@ -1,9 +1,0 @@
-<div class="login-container">
-  <img [src]="this.themeService.darkModeSubject.value ? 'lightfingerprint.svg' : 'darkfingerprint.svg'" class="logo"/>
-  <h1>Bejelentkezés</h1>
-  <app-shared-form [fields]="this.fields" (validSubmit)="handleLogin($event)">
-    <button submit-button matButton="filled" [disabled]="this.loadingService.loadingSubject.value">
-      Bejelentkezés
-    </button>
-  </app-shared-form>
-</div>

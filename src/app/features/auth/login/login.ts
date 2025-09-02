@@ -10,8 +10,36 @@ import {ThemeService} from '../../../core/services/theme.service';
 
 @Component({
   selector: 'app-login',
-  templateUrl: './login.html',
-  styleUrl: './login.scss',
+  template: `
+    <div class="login-container">
+      <img [src]="this.themeService.darkModeSubject.value ? 'lightfingerprint.svg' : 'darkfingerprint.svg'" class="logo" alt="Logo"/>
+      <h1>Bejelentkezés</h1>
+      <app-shared-form [fields]="this.fields" (validSubmit)="handleLogin($event)">
+        <button submit-button matButton="filled" [disabled]="this.loadingService.loadingSubject.value">
+          Bejelentkezés
+        </button>
+      </app-shared-form>
+    </div>
+  `,
+  styles: `
+    .login-container {
+      display: flex;
+      gap: 20px;
+      flex-direction: column;
+      position: absolute;
+      top: 15%;
+      left: calc(50% - 400px/2);
+      width: 400px;
+      .logo {
+        width: 60px;
+        height: 60px;
+        align-self: center;
+      }
+      h1 {
+        text-align: center;
+      }
+    }
+  `,
   imports: [
     ReactiveFormsModule,
     SharedForm,

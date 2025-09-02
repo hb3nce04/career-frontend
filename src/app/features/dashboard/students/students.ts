@@ -1,19 +1,19 @@
 import {Component, computed, inject, OnInit} from '@angular/core';
-import {StudentService} from './student.service';
-import {StudentDto} from '../../../shared/dtos/student.dto';
+import {StudentService} from './services/student.service';
+import {StudentModel} from '../../../shared/models/student.model';
 import {ClassSelectorService} from '../../../core/services/class-selector.service';
 import {SharedTable, TableColumn} from '../../../shared/components/shared-table/shared-table';
 import {MatDialog} from '@angular/material/dialog';
-import {DeleteStudentDialog} from './delete/delete';
+import {DeleteStudentDialog} from './components/dialog/delete.dialog';
 import {MatButton} from '@angular/material/button';
-import {CreateStudentDialog} from './create/create';
-import {ProfessionService} from './profession.service';
+import {CreateStudentDialog} from './components/dialog/create.dialog';
+import {ProfessionService} from './services/profession.service';
 import {NotificationService} from '../../../core/services/notification.service';
-import {CategoryService} from './category.service';
+import {CategoryService} from './services/category.service';
 import {forkJoin} from 'rxjs';
-import {SectorService} from './sector.service';
-import {EditStudentDialog} from './edit/edit';
-import {ViewStudentFieldDialog} from './view/view';
+import {SectorService} from './services/sector.service';
+import {EditStudentDialog} from './components/dialog/edit.dialog';
+import {ViewStudentFieldDialog} from './components/dialog/view.dialog';
 
 @Component({
   selector: 'app-students',
@@ -40,7 +40,7 @@ export class Students implements OnInit {
   private selectedClass = computed(() => this.classSelectorService.selectedClassSubject.value);
   protected dialog = inject(MatDialog);
 
-  data: StudentDto[] = [];
+  data: StudentModel[] = [];
   columns: TableColumn[] = [
     {
       header: 'OM azonosító',
@@ -54,13 +54,13 @@ export class Students implements OnInit {
     },{
       header: 'Munkarend',
       field: 'day_shift',
-      valueFn: (row: StudentDto) => row.day_shift ? 'Nappali' : 'Esti'
+      valueFn: (row: StudentModel) => row.day_shift ? 'Nappali' : 'Esti'
     }, {
       header: 'Pálya megtekintése',
       field: 'viewField',
       type: 'button',
       buttonText: 'Megtekintés',
-      buttonAction: (row: StudentDto) => this.handleFieldView(row),
+      buttonAction: (row: StudentModel) => this.handleFieldView(row),
       hideFromExport: true
     }]
 
@@ -72,7 +72,7 @@ export class Students implements OnInit {
     )
   }
 
-  handleDelete($event: StudentDto) {
+  handleDelete($event: StudentModel) {
     this.dialog.open(DeleteStudentDialog, {
       data: {
         student: $event
@@ -106,7 +106,7 @@ export class Students implements OnInit {
     });
   }
 
-  handleEdit(studentDto: StudentDto) {
+  handleEdit(studentDto: StudentModel) {
     let professionOrSectorId = undefined;
     if (studentDto.Profession) {
       professionOrSectorId = studentDto.Profession.id + "p"
@@ -134,7 +134,7 @@ export class Students implements OnInit {
     });
   }
 
-  private handleFieldView(row: StudentDto) {
+  private handleFieldView(row: StudentModel) {
     this.dialog.open(ViewStudentFieldDialog, {
       data: {
         student: row

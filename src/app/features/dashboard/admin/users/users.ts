@@ -1,16 +1,22 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {UserService} from '../../../../core/services/user.service';
-import {UserDto} from '../../../../shared/dtos/user.dto';
 import {SharedTable, TableColumn} from '../../../../shared/components/shared-table/shared-table';
-import {DeleteUserDialog} from './delete/delete';
+import {DeleteUserDialog} from './dialog/delete.dialog';
 import {MatDialog} from '@angular/material/dialog';
 import {MatButton} from '@angular/material/button';
-import {CreateUserDialog} from './create/create';
-import {EditUserDialog} from './edit/edit';
+import {CreateUserDialog} from './dialog/create.dialog';
+import {EditUserDialog} from './dialog/edit.dialog';
+import {UserModel} from '../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-users',
-  templateUrl: './users.html',
+  template: `
+    <div class="title">
+      <h1>Felhasználók</h1>
+      <button matButton="filled" (click)="handleCreate()">Új felhasználó hozzáadása</button>
+    </div>
+    <app-shared-table [data]="data" [columns]="columns" (delete)="handleDelete($event)" (edit)="handleEdit($event)"/>
+  `,
   styles: `
     .title {
       display: flex;
@@ -27,7 +33,7 @@ export class Users implements OnInit {
   private userService = inject(UserService);
   protected dialog = inject(MatDialog);
 
-  data: UserDto[] = [];
+  data: UserModel[] = [];
   columns: TableColumn[] = [
     {
       field: 'id',
@@ -47,7 +53,7 @@ export class Users implements OnInit {
     });
   }
 
-  handleDelete($event: UserDto) {
+  handleDelete($event: UserModel) {
     this.dialog.open(DeleteUserDialog, {
       data: {
         user: $event
@@ -67,7 +73,7 @@ export class Users implements OnInit {
     })
   }
 
-  handleEdit(userDto: UserDto) {
+  handleEdit(userDto: UserModel) {
     this.dialog.open(EditUserDialog, {
       data: {
         user: userDto
