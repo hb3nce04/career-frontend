@@ -7,7 +7,7 @@ import {
   MatDialogRef,
   MatDialogTitle
 } from '@angular/material/dialog';
-import {FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
+import {FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import {MatButton} from '@angular/material/button';
 import {NotificationService} from '../../../../core/services/notification.service';
 import {saveAs} from 'file-saver';
@@ -62,8 +62,8 @@ export class ExportDataDialog {
     }
   ]);
 
-  handleSave(values: any) {
-    const {name, withTimestamps} = values;
+  handleSave(form: FormGroup) {
+    const {name, withTimestamps} = form.value;
     const result = this.exportData(name, withTimestamps, this.data.columns, this.data.data);
     if (result) {
       this.dialogRef.close(true);

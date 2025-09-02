@@ -24,7 +24,9 @@
           <th mat-header-cell *matHeaderCellDef>
             <mat-checkbox (change)="$event ? toggleAllRows() : null"
                           [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+                          [indeterminate]="selection.hasValue() && !isAllSelected()"
+                          [matBadge]="this.selection.selected.length"
+                          [matBadgeHidden]="!isAllSelected()">
             </mat-checkbox>
           </th>
         } @else {
