@@ -3,7 +3,6 @@ import {RouterOutlet} from '@angular/router';
 import {ThemeService} from './core/services/theme.service';
 import {ClassSelectorService} from './core/services/class-selector.service';
 
-// TODO: frissítés csak akkor, ha tényleges módosítás történt
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet],
