@@ -17,10 +17,12 @@ import {MatButton} from '@angular/material/button';
     <mat-dialog-content>
       <div>Szakma: <span>{{ this.data.student.Profession ? this.data.student.Profession.name : 'Nincs' }}</span></div>
       <div>Ágazat: <span>{{ this.data.student.Sector ? this.data.student.Sector.name : 'Nincs' }}</span></div>
-      <mat-form-field>
-        <mat-label>Pálya leírása</mat-label>
-        <textarea matInput [value]="this.data.student.Field.description" [readonly]="true" rows="3"></textarea>
-      </mat-form-field>
+      @if (this.data.student.Field?.description) {
+        <mat-form-field>
+          <mat-label>Pálya leírása</mat-label>
+          <textarea matInput [value]="this.data.student.Field.description" [readonly]="true" rows="3"></textarea>
+        </mat-form-field>
+      }
     </mat-dialog-content>
     <mat-dialog-actions>
       <button matButton (click)="handleClose()" cdkFocusInitial>Bezárás</button>
