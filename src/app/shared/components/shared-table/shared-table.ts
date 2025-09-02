@@ -34,6 +34,8 @@ import {MatCheckbox} from '@angular/material/checkbox';
 import {SelectionModel} from '@angular/cdk/collections';
 import {ExportDataDialog} from './export/export';
 import {MatDialog} from '@angular/material/dialog';
+import {MatFormField} from '@angular/material/form-field';
+import {MatInput, MatLabel} from '@angular/material/input';
 
 export interface TableProps {
   pageSize?: number;
@@ -74,7 +76,10 @@ export interface TableColumn {
     MatIcon,
     MatIconButton,
     MatTooltip,
-    MatCheckbox
+    MatCheckbox,
+    MatFormField,
+    MatInput,
+    MatLabel
   ]
 })
 export class SharedTable<T> implements AfterViewInit, OnChanges{
@@ -138,5 +143,10 @@ export class SharedTable<T> implements AfterViewInit, OnChanges{
         columns,
       }
     })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

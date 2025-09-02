@@ -1,7 +1,13 @@
 <div class="toolbar">
-  <button mat-icon-button matTooltip="Adatok letöltése" (click)="handleExport()">
-    <mat-icon>download</mat-icon>
-  </button>
+  <mat-form-field appearance="outline" class="small">
+    <mat-label><mat-icon>search</mat-icon></mat-label>
+    <input matInput (keyup)="applyFilter($event)">
+  </mat-form-field>
+  <div>
+    <button mat-icon-button matTooltip="Adatok letöltése" (click)="handleExport()">
+      <mat-icon>download</mat-icon>
+    </button>
+  </div>
 </div>
 <div class="container mat-elevation-z8">
   @if (this.loadingService.loadingSubject.value) {
