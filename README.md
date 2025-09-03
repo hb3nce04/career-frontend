@@ -1,59 +1,48 @@
-# CareerFrontend
-
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.0.
-
-## Development server
-
-To start a local development server, run:
-
+> [!WARNING]
+> Ez a projekt **nem az eredeti pályamunka** ([palyakovetes](https://github.com/imbrainlezz/palyakovetes)), hanem annak egy teljesen átdolgozott és újraírt változata.</br>
+> Az alapötlet és dizájn olykor hasonló, de a megvalósítás jelentősen eltérhet és el is tér az eredetitől.
+# Pályakövető rendszer (career-frontend)
+Ez a repo a pályakövető rendszer **frontend** része, mely a felhasználói felület, UI/UX megvalósításáért felel.
+## Alapötlet
+Minden felhasználó számára képes megjeleníteni, hogy ki, mikor és melyik középiskolát fejezte be és ezután hol állt munkába, vagy melyik egyetemen tanul tovább.
+## Funkcionalitás
+### Felhasználói jogosultságok és lehetőségek
+- A felhasználók kizárólag **dolgozók** lehetnek; **regisztrációra nincs lehetőség**.  
+- Új felhasználókat csak az **adminisztrátorok** hozhatnak létre.  
+- A felhasználók a fiókjukkal:
+  - **adatokat módosíthatnak**,  
+  - **különböző szempontok szerint szűrhetnek**,  
+  - az adatokat **.csv fájlba exportálhatják**.  
+- A felhasználók **tanárok**, akiket **OM azonosítójuk** alapján azonosítunk.  
+- Adminisztrátorok hozzák létre a tanárok fiókjait **előre megadott jelszavakkal**, amelyeket a tanárok **később bármikor megváltoztathatnak**.  
+- Tanárok csak a **saját osztályaikat** láthatják, és ezekhez a fiókjukhoz tartozó **műveleteket végezhetik el**.
+## Dokumentáció
+[Angular](https://angular.dev/)</br>
+[Angular CLI](https://github.com/angular/angular-cli) v20.2.0
+### Fejlesztői szerver indítása (hot-reload)
 ```bash
 ng serve
 ```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
+Cím: `http://localhost:4200/`
+### Összeállítás
 ```bash
 ng build
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
+### Egységtesztek futtatása
 ```bash
 ng test
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
+### E2E tesztek futtatása
 ```bash
 ng e2e
 ```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Képernyőképek
+![Bejelentkezés](screenshots/01.png)
+![Főoldal](screenshots/02.png)
+![Osztály kiválasztása](screenshots/03.png)
+![Főoldal](screenshots/04.png)
+![Tanulók kezelése táblázat](screenshots/05.png)
+![Pályamegtekintő nézet](screenshots/06.png)
+![Felhasználók](screenshots/07.png)
+![Profil](screenshots/08.png)
+![Sötét mód](screenshots/09.png)
