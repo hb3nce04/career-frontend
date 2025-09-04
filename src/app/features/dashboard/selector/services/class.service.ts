@@ -34,7 +34,7 @@ export class ClassService {
     return this.httpClient.put<BaseResponseDto>(this.apiUrl + "/" + id, {
       name: name,
       finishingYear: finishingYear,
-      schoolId: schoolId,
+      school: {id: schoolId},
     }, {withCredentials: true});
   }
 }

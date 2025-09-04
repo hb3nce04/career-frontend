@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable, tap} from 'rxjs';
 import {BaseResponseDto} from '../dto/base-response.dto';
 import {UserModel} from '../../shared/models/user.model';
 import {ENVIRONMENT} from '../../../environments/environment';
+import {AuthModel} from '../models/auth.model';
 
 interface LoginResponse extends BaseResponseDto {
   user: UserModel;
@@ -16,8 +17,8 @@ export class AuthService {
 
   private userSubject = new BehaviorSubject<UserModel | null>(null);
 
-  login(id: string | null | undefined, password: string | null | undefined) {
-    return this.http.post<LoginResponse>(this.apiUrl + "/login", {id, password}, {withCredentials: true}).pipe(
+  login(body: AuthModel) {
+    return this.http.post<LoginResponse>(this.apiUrl + "/login", body, {withCredentials: true}).pipe(
       tap(response => {
         this.userSubject.next(response.user);
       })

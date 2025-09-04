@@ -51,10 +51,11 @@ export class Students implements OnInit {
       header: 'Név',
       field: 'name',
       sortable: true,
+      valueFn: (row: StudentModel) => `${row.lastName} ${row.firstName}`
     },{
       header: 'Munkarend',
       field: 'day_shift',
-      valueFn: (row: StudentModel) => row.day_shift ? 'Nappali' : 'Esti'
+      valueFn: (row: StudentModel) => row.isDayShift ? 'Nappali' : 'Esti'
     }, {
       header: 'Pálya megtekintése',
       field: 'viewField',
@@ -108,10 +109,10 @@ export class Students implements OnInit {
 
   handleEdit(studentDto: StudentModel) {
     let professionOrSectorId = undefined;
-    if (studentDto.Profession) {
-      professionOrSectorId = studentDto.Profession.id + "p"
-    } else if (studentDto.Sector) {
-      professionOrSectorId = studentDto.Sector.id + "s"
+    if (studentDto.profession) {
+      professionOrSectorId = studentDto.profession.id + "p"
+    } else if (studentDto.sector) {
+      professionOrSectorId = studentDto.sector.id + "s"
     }
     forkJoin({
       professions: this.professionService.getAll(),

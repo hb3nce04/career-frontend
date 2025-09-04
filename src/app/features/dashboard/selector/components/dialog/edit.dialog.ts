@@ -46,7 +46,7 @@ export class EditClassDialog {
       name: 'finishingYear',
       label: 'Végzési év',
       type: 'select',
-      value: this.data.class.finishing_year,
+      value: this.data.class.finishingYear,
       validators: [Validators.required],
       options: Array.from({length: 25 + 1}, (_, i) => {
         const computed = new Date().getFullYear() - 25 + i;
@@ -57,7 +57,7 @@ export class EditClassDialog {
       name: 'schoolId',
       label: 'Iskola',
       type: 'select',
-      value: this.data.class.School.id,
+      value: this.data.class.school.id,
       validators: [Validators.required],
       options: this.data.schools.map((school: SchoolModel) => {
         return {value: school.id, label: school.name};

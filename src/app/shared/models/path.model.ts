@@ -1,6 +1,6 @@
 import {StudentModel} from './student.model';
 
-export interface FieldModel {
+export interface PathModel {
   id?: number;
   name?: string;
   description: string;

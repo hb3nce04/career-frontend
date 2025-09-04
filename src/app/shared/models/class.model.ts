@@ -5,9 +5,9 @@ import {StudentModel} from './student.model';
 export interface ClassModel {
   id: number;
   name: string;
-  finishing_year: number;
+  finishingYear: number;
 
-  School?: SchoolModel;
+  school?: SchoolModel;
   User?: UserModel;
   Student?: StudentModel[];
 }

@@ -1,14 +1,15 @@
 import {ClassModel} from './class.model';
 import {SectorModel} from './sector.model';
 import {ProfessionModel} from './profession.model';
-import {FieldModel} from './field.model';
+import {PathModel} from './path.model';
 
 export interface StudentModel {
   id: number;
-  name: string;
-  day_shift: boolean;
+  firstName: string;
+  lastName: string;
+  isDayShift: boolean;
   Class: ClassModel;
-  Sector: SectorModel;
-  Profession: ProfessionModel;
-  Field: FieldModel;
+  sector: SectorModel;
+  profession: ProfessionModel;
+  career: PathModel;
 }

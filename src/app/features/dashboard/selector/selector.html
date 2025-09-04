@@ -8,10 +8,10 @@
               [class]="(this.classSelectorService.selectedClass$ | async)?.id === schoolClass.id ? 'selected' : ''">
       <mat-card-header>
         <mat-card-title>Osztály: {{ schoolClass.name }}</mat-card-title>
-        <mat-card-subtitle>Végzés éve: {{ schoolClass.finishing_year }}</mat-card-subtitle>
+        <mat-card-subtitle>Végzés éve: {{ schoolClass.finishingYear }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
-        {{ schoolClass.School?.name }}
+        {{ schoolClass.school?.name }}
       </mat-card-content>
       <mat-card-actions>
         @if ((this.classSelectorService.selectedClass$ | async)?.id === schoolClass.id) {

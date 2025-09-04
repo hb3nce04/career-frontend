@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {FieldConfig, SharedForm} from '../../../shared/components/shared-form/shared-form';
 import {MatButton} from '@angular/material/button';
 import {ThemeService} from '../../../core/services/theme.service';
+import {HttpErrorResponse, HttpStatusCode} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -71,14 +72,17 @@ export class Login {
 
   handleLogin(form: FormGroup) {
     const {id, password} = form.value;
-    this.authService.login(id, password).subscribe({
+    this.authService.login({educationId: id, password}).subscribe({
       next: response => {
         this.notificationService.open(response.message)
         this.router.navigate(['/dashboard/selector']);
       },
-      error: response => {
-        const error = response.error;
-        this.notificationService.open(error.message ?? 'Hiba történt a bejelentkezés során!')
+      error: (response: HttpErrorResponse) => {
+        if (response.status === HttpStatusCode.Forbidden) {
+          this.notificationService.open("Hibás felhasználónév vagy jelszó!")
+        } else {
+          this.notificationService.open(response.message ?? 'Hiba történt a bejelentkezés során!')
+        }
       }
     });
   }
